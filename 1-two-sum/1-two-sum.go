@@ -5,14 +5,14 @@ func twoSum(nums []int, target int) []int {
     
     counter := make(map[int]int)
     for idx,v := range nums{ // O(n)
-        counter[v]= idx
-    }
-    
-    for idx,v := range nums{ //O(n)
         remaining := target - v 
-        if ridx,e := counter[remaining]; e && ridx != idx {
+        if _,e := counter[remaining]; e {
             return []int{idx,counter[remaining]}
         }
+        counter[v]= idx 
+        
     }
+    
+
     return []int{}
 }
