@@ -26,9 +26,9 @@ func isValid(s string) bool {
     
     for _, symbol := range s{
         n := len(opening_stack)-1
-        if isOpening(symbol){            
+        if isOpening(symbol){
             opening_stack = append(opening_stack, antonymOf(symbol))
-        }else if n >= 0 && opening_stack[n]  == symbol {
+        }else if n >= 0 && opening_stack[n]  == symbol { // compare closing with closing
             opening_stack = opening_stack[:n]
         }else{
             return false;
