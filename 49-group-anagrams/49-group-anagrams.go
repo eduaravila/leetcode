@@ -1,27 +1,28 @@
-import (
-    "sort"
-    "bytes"
-)
+func getHashKey(str string)string{
+    counter := make([]rune, 26)
+    for _,symbol := range str{
+        counter[symbol -'a']++
+    }
+    return string(counter)
+}
 
 func groupAnagrams(strs []string) [][]string {
-    if len(strs) < 1{
-        return [][]string{}
-    }
+    // create a hashkey with the words, meaning same symbols in apparence and amount 
+    // results in the same hash key 
+    // use an array of the size of the english alphabet 
+    // the groups hash table will save an array of strings
+    // add the values to the final response
     
     groups := make(map[string][]string)
-    res := [][]string{}
-    for _, str := range strs{
-        ordered := bytes.NewBufferString(str)
-        sort.Slice(ordered.Bytes(), func(a,b int)bool{
-            return ordered.Bytes()[a] < ordered.Bytes()[b]
-        })
-        
-        groups[ordered.String()] = append(groups[ordered.String()],str)
+    for _, str := range strs {
+        key := getHashKey(str)
+        groups[key]= append(groups[key],str)
     }
     
-    for _,group := range groups{
+    res := [][]string{}
+    for _, group := range groups {
         res = append(res,group)
     }
     
-    return res
+    return res 
 }
