@@ -1,70 +1,40 @@
-
-const 
+import 
 (
-    COL_SIZE = 3
-    ROW_SIZE = 3
-    BOARD_TOTAL = 9
+    "strconv"
 )
 
-func convertToInt(val byte) int{
-    if val >= '1' && val <= '9' {
-        return int(val)
+func isDuplicated(arr []byte, val byte) bool{    
+    for _, current := range arr {
+        if current == val {
+            return true
+        }
     }
-    return 0
+    return false
 }
 
+func getSubboardKey(col, row int) string{
+    colK := strconv.Itoa(int(col)/3)
+    rowK := strconv.Itoa(int(row)/3)
+    return colK + ","+ rowK 
+}
 
 func isValidSudoku(board [][]byte) bool {
+    rows := make(map[int][]byte)
+    cols := make(map[int][]byte)
+    subs := make(map[string][]byte)
     
-    unique := make(map[int]bool)
-    
-    for _ ,row := range board {
-        for _, val := range row {
-            value := convertToInt(val)
-            if value == 0 {
+    for idxRow,row :=  range board{
+        for idxCol, val := range row{ 
+            if val == '.'{
                 continue
             }
-            if _,e := unique[value];e {
+            if isDuplicated(rows[idxRow], val) || isDuplicated(cols[idxCol], val) || isDuplicated(subs[getSubboardKey(idxCol, idxRow)], val){
                 return false
             }
-            unique[value] = true
+            rows[idxRow] = append(rows[idxRow],val)
+            cols[idxCol] = append(cols[idxCol],val)
+            subs[getSubboardKey(idxCol,idxRow)] = append(subs[getSubboardKey(idxCol,idxRow)], val)
         }
-        unique = make(map[int]bool)        
     }
-    
-        
-    for idxcol, col := range board {
-        for idxrow := range col {
-            value := convertToInt(board[idxrow][idxcol])
-            
-            if value == 0 {
-                continue
-            }
-            if _,e := unique[value];e {
-                return false
-            }
-            unique[value] = true
-        }
-        unique = make(map[int]bool)        
-    }
-    
-    
-    for n_board := 0 ; n_board < BOARD_TOTAL; n_board++{
-        for field := 0 ; field < COL_SIZE * ROW_SIZE; field++{
-            col := (field % COL_SIZE) + ((n_board % COL_SIZE) * COL_SIZE) 
-            row := field / ROW_SIZE + ((n_board / ROW_SIZE) * ROW_SIZE)
-            value := convertToInt(board[row][col])
-            if value == 0 {
-                continue
-            }
-            if _,e := unique[value];e {
-                return false
-            }
-            unique[value] = true
-        }     
-        unique = make(map[int]bool)        
-
-    }
-    
     return true
 }
