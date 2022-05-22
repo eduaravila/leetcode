@@ -8,7 +8,7 @@ func twoSum(nums []int, target int) []int {
     for idxc, num := range nums{
         remaining := target - num 
         
-        if _, e := counter[remaining]; e && idxc != counter[remaining] {
+        if idx, e := counter[remaining]; e && idxc != idx {
             return []int{idxc, counter[remaining]}
         }
     }
