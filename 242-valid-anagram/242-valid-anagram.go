@@ -1,15 +1,15 @@
 func isAnagram(s string, t string) bool {
-    counterA := make(map[rune]int)
-    counterB := make(map[rune]int)
     
-    for _,val := range s{
-        counterA[val]++
+    if len(s) != len(t){
+        return false
     }
-    for _,val := range t{
-        if _,e := counterA[val]; !e{
-            return false
-        }
-        counterB[val]++
+    
+    counterA := make(map[byte]int)
+    counterB := make(map[byte]int)
+    
+    for i := range s{
+        counterA[s[i]]++
+        counterB[t[i]]++
     }
     
     for letter,counter := range counterA{
