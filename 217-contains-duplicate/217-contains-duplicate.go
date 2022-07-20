@@ -1,12 +1,11 @@
 func containsDuplicate(nums []int) bool {
-    set := make(map[int]bool)
+    counter := make(map[int]bool)
     
-    for _,val := range nums {
-        if _,e := set[val]; e{
+    for _,num := range nums {
+        if counter[num]{
             return true
         }
-        set[val] = true       
+        counter[num] = true
     }
-    
     return false
 }
