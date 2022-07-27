@@ -5,10 +5,9 @@ import (
 func groupAnagrams(strs []string) [][]string {
     groups := make(map[string][]string)
     for _,str := range strs{
-        sorted := strings.Split(str,"")        
-        sort.Strings(sorted)
-        key := fmt.Sprintf("%v", sorted)
-        
+        s := []rune(str)
+        sort.Slice(s, func(a,b int) bool {return s[a] < s[b]})
+        key := string(s)
         groups[key] = append(groups[key],str)
     }
     res := make([][]string, 0)
