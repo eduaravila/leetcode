@@ -5,17 +5,15 @@ func topKFrequent(nums []int, k int) []int {
         groups[num]++
     }
     
-    buckets := make([][]int,len(nums))
+    buckets := make([][]int,len(nums)+1)
     for num, qty := range groups {        
-        position := (len(nums) -1)/ qty
-        buckets[position] = append(buckets[position],num)
+        
+        buckets[qty] = append(buckets[qty],num)
     }
     res := []int{}
     
-    for i:= 0 ; i < len(buckets) ; i++ {
-        
+    for i:= len(buckets)-1; i >=0 ; i-- {        
         if len(res) >= k {
-            fmt.Println(res)
             return res[:k]
         }
         res = append(res, buckets[i]...)
