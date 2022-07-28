@@ -1,41 +1,32 @@
 func isValidSudoku(board [][]byte) bool {
-    rows := make(map[string]bool)
-    cols := make(map[string]bool)
+    rows := make([][]int,10)
+    cols := make([][]int,10)
+    grids := make([][]int,10)
     
+    for i := 0 ; i < 9 ; i++ {
+        rows[i] = make([]int,10)
+        cols[i] = make([]int,10)
+        grids[i] = make([]int,10)
+    }
     for rowIdx,row := range board {
         for colIdx, key := range row {    
-            keyCol := fmt.Sprintf("%d-%s",colIdx,string(key))
-            keyRow := fmt.Sprintf("%d-%s",rowIdx,string(key))
             
-            if e := cols[keyCol]; e{                
+            if key == '.'{
+                continue
+            }
+            
+            c, _ := strconv.Atoi(string(key))
+            gridNum :=(rowIdx / 3 )+ 3 * (colIdx/3)
+            
+            if rows[rowIdx][c] != 0 || cols[colIdx][c] != 0|| grids[gridNum][c] != 0{
                 return false
             }
-            if e := rows[keyRow]; e{                
-                return false
-            }
             
-            if key != '.'{                
-                cols[keyCol] = true
-                rows[keyRow] = true
-            }
-            
-            
+            rows[rowIdx][c] = c
+            cols[colIdx][c] = c
+            grids[gridNum][c] = c
         }
     }
-    
-    grids := make(map[string]bool)    
-     for rowIdx,row := range board {
-        for colIdx,val := range row {                      
-            key := fmt.Sprintf("%d-%d-%s",(rowIdx / 3),(colIdx / 3),string(val))            
             
-            if e := grids[key]; e{                
-                return false
-            }
-            if val != '.'{                
-                grids[key] = true
-            }
-        }
-    }
-    
     return true
 }
