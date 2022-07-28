@@ -18,7 +18,6 @@ func productExceptSelf(nums []int) []int {
     }
     
     res := make([]int,len(nums))
-    fmt.Println(lr,rl)
     l = 0
     for l < len(nums){
         if l-1 < 0 {
