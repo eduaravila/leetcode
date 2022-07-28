@@ -1,40 +1,41 @@
-import 
-(
-    "strconv"
-)
-
-func isDuplicated(arr []byte, val byte) bool{    
-    for _, current := range arr {
-        if current == val {
-            return true
-        }
-    }
-    return false
-}
-
-func getSubboardKey(col, row int) string{
-    colK := strconv.Itoa(int(col)/3)
-    rowK := strconv.Itoa(int(row)/3)
-    return colK + ","+ rowK 
-}
-
 func isValidSudoku(board [][]byte) bool {
-    rows := make(map[int][]byte)
-    cols := make(map[int][]byte)
-    subs := make(map[string][]byte)
+    rows := make(map[string]bool)
+    cols := make(map[string]bool)
     
-    for idxRow,row :=  range board{
-        for idxCol, val := range row{ 
-            if val == '.'{
-                continue
-            }
-            if isDuplicated(rows[idxRow], val) || isDuplicated(cols[idxCol], val) || isDuplicated(subs[getSubboardKey(idxCol, idxRow)], val){
+    for rowIdx,row := range board {
+        for colIdx, key := range row {    
+            keyCol := fmt.Sprintf("%d-%s",colIdx,string(key))
+            keyRow := fmt.Sprintf("%d-%s",rowIdx,string(key))
+            
+            if e := cols[keyCol]; e{                
                 return false
             }
-            rows[idxRow] = append(rows[idxRow],val)
-            cols[idxCol] = append(cols[idxCol],val)
-            subs[getSubboardKey(idxCol,idxRow)] = append(subs[getSubboardKey(idxCol,idxRow)], val)
+            if e := rows[keyRow]; e{                
+                return false
+            }
+            
+            if key != '.'{                
+                cols[keyCol] = true
+                rows[keyRow] = true
+            }
+            
+            
         }
     }
+    
+    grids := make(map[string]bool)    
+     for rowIdx,row := range board {
+        for colIdx,val := range row {                      
+            key := fmt.Sprintf("%d-%d-%s",(rowIdx / 3),(colIdx / 3),string(val))            
+            
+            if e := grids[key]; e{                
+                return false
+            }
+            if val != '.'{                
+                grids[key] = true
+            }
+        }
+    }
+    
     return true
 }
