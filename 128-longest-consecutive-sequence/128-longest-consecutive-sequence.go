@@ -1,5 +1,5 @@
 func longestConsecutive(nums []int) int {
-    indexes := make(map[int]bool)
+    indexes := map[int]bool{}
     
     for _,num := range nums {
         indexes[num] = false
