@@ -1,16 +1,14 @@
-func twoSum(numbers []int, target int) []int {
-    l:=0
-    r:=len(numbers)-1
-    for l< r{                
-        remaining := numbers[l] + numbers[r]
-        
-        if remaining < target {            
-            l++            
-        }else if remaining > target {
+func twoSum(nums []int, target int) []int {        
+    l,r := 0,len(nums)-1
+    for l < r{
+        if nums[l] + nums[r] > target {
             r--
+        }else if nums[l] + nums[r] < target {
+            l++
         }else{
             return []int{l+1,r+1}
-        }
+        }        
     }
+    
     return []int{}
 }
