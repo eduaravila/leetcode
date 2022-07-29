@@ -7,15 +7,15 @@ func longestConsecutive(nums []int) int {
     
     maxSequence := 0
     
-    for num, visited := range indexes {
-        if visited {
+    for _, num := range nums {
+        if _,e :=indexes[num-1]; e {
             continue
         }
+        
         current := num
         currentSequence := 0
         _, e := indexes[current];
-        for e {
-            indexes[current]= true
+        for e {            
             currentSequence++
             if currentSequence > maxSequence{
                 maxSequence = currentSequence
