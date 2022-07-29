@@ -1,7 +1,8 @@
 func twoSum(nums []int, target int) []int {        
     l,r := 0,len(nums)-1
+    currentSum := 0
     for l < r{
-        currentSum  := nums[l] + nums[r]
+        currentSum = nums[l] + nums[r]
         if currentSum > target {
             r--
         }else if currentSum < target {
