@@ -1,36 +1,32 @@
-import 
-(
-"fmt"
-)
-
-func threeSum(nums []int) [][]int {
-    sort.Ints(nums)
+import "sort"
+func threeSum(input []int) [][]int {
+    sort.Ints(input)
     res := [][]int{}
-    used := make(map[string]bool)
-    current := 0 
     
-    for current < len(nums){
-        l, r := current+1,len(nums)-1
-        
-        for l < r {            
-            remaining := nums[l] + nums[r] + nums[current]
-            
-            
-            if remaining > 0 {
-                r--
-            }else if remaining < 0 {
-                l++
-            }else {
-                key := fmt.Sprintf("%d-%d-%d",nums[current],nums[l],nums[r])
-                if _,e := used[key];!e{
-                    res = append(res,[]int{nums[current],nums[l],nums[r]})                                    
-                    used[key]=true
-                }
-                l++
-                r--                                
-            }
+    
+    for i,val := range input {                 
+        if i > 0 && val == input[i-1]{
+            continue
         }
-        current++
+        l,r := i+1, len(input)-1    
+        
+        for l < r {
+            sum := val + input[l] + input[r]
+            if sum > 0 { 
+                r--
+            }else if sum < 0 {
+                l++
+            }else{
+                res = append(res,[]int{val, input[l],input[r]})
+                l++
+                for l < r && input[l] == input[l-1] {
+                    l++
+                }
+            }
+            
+        }        
+                             
     }
+    
     return res
 }
