@@ -1,27 +1,28 @@
-func getMax(a,b int)int{
-    if a > b {
-        return a
-    }
-    return b
-}
 func longestConsecutive(nums []int) int {
-    counter := make(map[int]bool)
+    indexes := make(map[int]bool)
     
     for _,num := range nums {
-        counter[num]=true
+        indexes[num] = false
     }
     
-    var res int
-    for _,num := range nums {
-        var groupl int = 0
-        if _,e := counter[num-1]; !e{
-            _, e := counter[num+groupl]
-            for e {                
-                groupl++
-                _, e = counter[num+groupl]
-            }
+    maxSequence := 0
+    
+    for num, visited := range indexes {
+        if visited {
+            continue
         }
-        res = getMax(groupl,res)        
+        current := num
+        currentSequence := 0
+        _, e := indexes[current];
+        for e {
+            indexes[current]= true
+            currentSequence++
+            if currentSequence > maxSequence{
+                maxSequence = currentSequence
+            }
+            current++
+            _, e = indexes[current];
+        }
     }
-    return res
+    return maxSequence
 }
