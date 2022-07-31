@@ -1,28 +1,19 @@
-func getMin(a,b int) int{
-    if a < b { 
-        return a
-    }
-    return b    
-}
 
-func getMax(a,b int) int{
-    if a > b {
-        return a
-    }
-    return b
-}
-func maxArea(height []int) int {
-    l:= 0 
-    r := len(height) -1 
-    var res int
-    for l < r { 
-        width := r-l 
-        res = getMax(res, width * getMin(height[l], height[r]))
-        if height[l] > height[r]{
-            r--            
-        }else{
+func maxArea(height []int) int {    
+    l,r := 0,len(height) -1
+    var currentAmount, maxAmount int
+    
+    for l < r {                
+        if height[l] < height[r]{
+            currentAmount = height[l] * (r - l)
             l++
+        }else{
+            currentAmount = height[r] * (r - l)
+            r--
         }
-    }    
-    return res
+        if currentAmount > maxAmount { 
+            maxAmount = currentAmount
+        }
+    }
+    return maxAmount
 }
