@@ -1,22 +1,25 @@
 func lengthOfLongestSubstring(s string) int {
-    l,res := 0,0
-    subStringCounter := make(map[rune]int)
+    l,r ,res := 0,0,0
+    subStringCounter := make(map[byte]bool)
 
-    for r, run := range s{
-        
-        subStringCounter[run]++
-        
-        for l <= r && subStringCounter[run] > 1 {            
-            subStringCounter[rune(s[l])]--
+    for r < len(s) {                     
+        if _,e := subStringCounter[s[r]]; !e{            
+            subStringCounter[s[r]] = true            
+            r++
+            if len(subStringCounter) > res{
+                res = len(subStringCounter)
+            }
+        }else{
+            delete(subStringCounter,s[l])
             l++
-        }
-        if (r - l) +1 > res{
-            res= (r - l) + 1
         }
         
     }
     return res
 }
 
-// count temporal window elements
-// get max substring
+// start a window
+// count the windows elements
+// if we encounter a repeated element inside the window
+// delete from left and shrink by increasing l++
+// if the element is new add it to the substring and compare the result
