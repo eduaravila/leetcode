@@ -1,28 +1,14 @@
-func getMax(a,b int)int{
-    if a > b {
-        return a
-    }
-    return b
-}
-
 func maxProfit(prices []int) int {
-    if len(prices) < 2 {
-        return 0 
-    }
-    
-    buy, sell := 0,1
-    var res int
-    for sell < len(prices){
-        
-        if prices[sell] < prices[buy]{
-            buy = sell
-        }else{
-            res = getMax(res, prices[sell] - prices[buy])
+    l,res := 0,0
+    for i:=1 ;i<len(prices); i++{
+        profit := prices[i] - prices[l]
+        if profit > res {
+            res= profit
         }
-        sell++
+        if prices[i] < prices[l] {
+            l = i
+        }        
     }
-    
-    
     
     return res
 }
