@@ -14,7 +14,7 @@ func minWindow(s string, t string) string {
     subCount := make(map[rune]int)
     
     matches:=0
-    for r < len(s){
+    for r < len(s){ // O(n)
         k := rune(s[r])        
         if val, e := count[k]; e  {            
             subCount[k]++
@@ -28,7 +28,7 @@ func minWindow(s string, t string) string {
             if r - l  < res[1] - res[0] {
                 res = []int{l,r+1}    
             }
-            k := rune(s[l])
+            k = rune(s[l])
             subCount[k]--
             if val, e := count[k]; e && subCount[k] < val{
                 matches--
@@ -45,4 +45,8 @@ func minWindow(s string, t string) string {
 
 // r keeps going if the substring is not complete
 // l moves to shrink the result
-// count characters of t using a array from 0 to 26
+// count the chars in t 
+// if the current subSting has the required chars 
+// enter inner loop to try to reduce the size if the substring and response
+// if the deleted element was necesary in the substring, exit the loop 
+// response need l and r
