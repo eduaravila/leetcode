@@ -1,43 +1,46 @@
 func checkInclusion(s1 string, s2 string) bool {
-    if len(s1) > len(s2){ 
+    if len(s1) > len(s2){
         return false
     }
-    s1C := make([]int,26)
-    s2C := make([]int,26)
-    for i,val := range s1{
-        s1C[val - 'a']++
-        s2C[rune(s2[i]) - 'a']++
-    }
-    matches := 0
+    count1 := make(map[rune]int)
+    count2 := make(map[rune]int)
     
-    for i := 0; i<26 ;i++{
-        if s1C[i] == s2C[i] {
-            matches++
-        }
+    for i,val := range s1{
+        count1[val]++
+        count2[rune(s2[i])]++
     }
+    
+    matches := 0 
+    for k, val1 := range count1{
+        if val2,e := count2[k];e && val1 == val2 {
+            matches+= count2[k]
+        }
+    }   
     l := 0
-    // start at window end
-    for r:= len(s1) ; r < len(s2) ;r++{
-        if matches == 26{
+    
+    for i:= len(s1) ; i < len(s2) ; i++{
+        if matches == len(s1){
             return true
         }
+        k := rune(s2[i])
+        count2[k]++
         
-        index := rune(s2[r]) - 'a'
+        if val,e := count1[k]; e && val == count2[k]{ 
+            matches+=val
+        }else if val,e := count1[k]; e && val+1 == count2[k]{
+            matches-=val
+        }
         
-        s2C[index]++
-        if s1C[index] == s2C[index]{
-            matches++
-        }else if s1C[index] +1 == s2C[index]{ // exceed char count 
-            matches--
+        k = rune(s2[l])
+        count2[k]--
+        if val,e := count1[k]; e && val == count2[k]{ 
+            matches+=val
+        }else if val,e := count1[k]; e && val-1 == count2[k]{
+            matches-=val
         }
-        index = rune(s2[l]) - 'a'
-        s2C[index]--
-        if s1C[index] == s2C[index]{
-            matches++
-        }else if s1C[index] - 1 == s2C[index]{ // removed required values
-            matches--
-        }
+        
         l++
     }
-    return matches == 26
+    
+    return matches == len(s1) 
 }
