@@ -9,12 +9,12 @@ func minWindow(s string, t string) string {
         
     }
     
-    l,r := 0,0
+    l := 0
     res := []int{l,int(^uint(0)>>1)}
     subCount := make(map[rune]int)
     
     matches:=0
-    for r < len(s){ // O(n)
+    for r := range s{ // O(n)
         k := rune(s[r])        
         if val, e := count[k]; e  {            
             subCount[k]++
@@ -35,7 +35,7 @@ func minWindow(s string, t string) string {
             }
             l++
         }
-        r++        
+              
     }
     if res[1] == int(^uint(0)>>1){
         return *new(string)
