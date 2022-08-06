@@ -24,9 +24,9 @@ func minWindow(s string, t string) string {
         }
         
         for matches == len(count){     
-           
+
             if r - l  < res[1] - res[0] {
-                res = []int{l,r+1}    
+                res = []int{l,r}    
             }
             k = rune(s[l])
             subCount[k]--
@@ -40,7 +40,7 @@ func minWindow(s string, t string) string {
     if res[1] == int(^uint(0)>>1){
         return *new(string)
     }
-    return s[res[0]:res[1]]
+    return s[res[0]:res[1]+1]
 }
 
 // r keeps going if the substring is not complete
