@@ -10,7 +10,8 @@ func minWindow(s string, t string) string {
     }
     
     l := 0
-    res := []int{l,int(^uint(0)>>1)}
+    intf :=int(^uint(0)>>1)
+    res := []int{l,intf}
     subCount := make(map[rune]int)
     
     matches:=0
@@ -34,7 +35,7 @@ func minWindow(s string, t string) string {
         }
               
     }
-    if res[1] == int(^uint(0)>>1){
+    if res[1] == intf{
         return *new(string)
     }
     return s[res[0]:res[1]+1]
