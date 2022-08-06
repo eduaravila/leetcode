@@ -15,16 +15,13 @@ func minWindow(s string, t string) string {
     
     matches:=0
     for r := range s{ // O(n)
-        k := rune(s[r])        
-        if val, e := count[k]; e  {            
-            subCount[k]++
-            if subCount[k] == val{
-                matches++
-            }
+        k := rune(s[r])    
+        subCount[k]++
+        if val, e := count[k]; e && subCount[k] == val {                        
+            matches++            
         }
         
         for matches == len(count){     
-
             if r - l  < res[1] - res[0] {
                 res = []int{l,r}    
             }
