@@ -1,84 +1,41 @@
+import (
+    goheap "container/heap"
+)
+
 type heap []int
 
-func NewHeap() heap{
-    return []int{0}
+func (h *heap) Less(a,b int) bool{return (*h)[a] > (*h)[b] }
+func (h *heap) Len() int { return len(*h)}
+func (h *heap) Swap(a,b int) { (*h)[a],(*h)[b] = (*h)[b],(*h)[a] }
+func (h *heap) Pop() interface{} {
+    temp := (*h)[len(*h)-1]
+    *h = (*h)[:len(*h)-1]
+    return temp
 }
-
-func (h *heap) SUp(idx int)  {
-    if idx < 1 || idx >= len(*h) {
-        return
-    }
-    parent := idx / 2 
-    
-    if parent > 0 && (*h)[parent] < (*h)[idx] {
-        h.swap(parent,idx)
-        h.SUp(parent)  
-    }
-    
-}
-
-func (h *heap) SDown(idx int) {
-    left, right := idx * 2, (idx * 2) + 1
-    if left >= len(*h){
-        return 
-    }
-    if right >= len(*h){
-        right =left
-    }
-    if (*h)[left] > (*h)[idx] && (*h)[left] > (*h)[right] {
-        h.swap(left,idx)
-        h.SDown(left)
-        return 
-    }
-    if (*h)[right] > (*h)[idx]{
-        h.swap(right,idx)
-        h.SDown(right)
-        return
-    }
-    
-}
-
-func (h *heap) swap(a,b int){
-     (*h)[a],(*h)[b] = (*h)[b], (*h)[a]
-}
-
-func (h *heap) Add(val int) *heap{
-    *h = append(*h, val)
-    h.SUp(len(*h)-1)
-    return h
-}
-
-func (h *heap) Max() int{
-    return (*h)[1]
-}
-
-func (h *heap) Remove(val int){
-    idx := -1 
-    for i:= 1 ;i < len(*h) ; i++ { 
-        if (*h)[i] == val {
-            idx = i
-            break
-        }
-    }
-    h.swap(idx,len(*h)-1)
-    (*h) = (*h)[:len(*h)-1]        
-    h.SDown(idx)
-    h.SUp(idx)
-}
+func (h *heap) Push(val interface{}) {*h = append(*h,val.(int))}
 
 func maxSlidingWindow(nums []int, k int) []int {
-    h := NewHeap()
+    _h := &heap{}
+    goheap.Init(_h)
+    
     for i:=0 ; i < k; i++{
-        h.Add(nums[i])        
+        goheap.Push(_h, nums[i])        
     }    
     res := []int{}
     l := 0
-    res = append(res,h.Max())
+    res = append(res,(*_h)[0])
     for r := k; r < len(nums); r++{
-        h.Add(nums[r]) 
-        h.Remove(nums[l])
+        goheap.Push(_h, nums[r])
+        idx := 0 
+        for i,val := range *_h{
+            if val == nums[l]{
+                idx= i
+                break
+            }
+        }
+        goheap.Remove(_h,idx)
        
-        res = append(res, h.Max())
+        res = append(res, (*_h)[0])
         l++
     }
     return res
