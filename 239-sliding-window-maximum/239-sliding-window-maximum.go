@@ -25,7 +25,7 @@ func (h *heap) SDown(idx int) {
     if right >= len(*h){
         right =left
     }
-    if (*h)[left] > (*h)[idx] && (*h)[left] >= (*h)[right] {
+    if (*h)[left] > (*h)[idx] && (*h)[left] > (*h)[right] {
         h.swap(left,idx)
         h.SDown(left)
         return 
