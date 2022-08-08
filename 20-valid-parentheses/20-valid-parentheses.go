@@ -20,5 +20,5 @@ func isValid(s string) bool {
             return false
         }
     }
-    return len(cStack) == 0
+    return len(cStack) < 1
 }
