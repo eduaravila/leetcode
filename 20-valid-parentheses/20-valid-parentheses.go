@@ -1,40 +1,24 @@
-
-
-func isOpening(symbol rune)bool{
-    return symbol == '(' || symbol == '[' || symbol == '{'
-}
-
-func antonymOf(symbol rune)rune{
-    switch (symbol){
-        case '(':
-            return ')'
-        case '[':
-            return ']'
-        case '{':
-            return '}'
+func isValidClose(r rune, stack []rune)bool{
+    if len(stack) < 1{
+        return false
     }
-   return 0
+    last := stack[len(stack)-1]    
+    if (r == '}' && last == '{') || (r == ')' && last == '(') || (r == ']' && last == '['){
+        return true
+    }
+    return false
 }
 
 func isValid(s string) bool {
-    // opening char must have ending char
-    // compare compatible symbols
-    // add to stack opening symbols
-    // every time we find a closing symbol, compare with peak from stack
-    
-    opening_stack := make([]rune,0)
-    
-    for _, symbol := range s{
-        n := len(opening_stack)-1
-        if isOpening(symbol){
-            opening_stack = append(opening_stack, antonymOf(symbol))
-        }else if n >= 0 && opening_stack[n]  == symbol { // compare closing with closing
-            opening_stack = opening_stack[:n]
+    cStack := []rune{}
+    for _, r := range s{
+        if r == '(' || r == '[' || r == '{' {
+            cStack = append(cStack,r)
+        }else if isValidClose(r,cStack){
+            cStack = cStack[:len(cStack)-1]
         }else{
-            return false;
+            return false
         }
-        
     }
-    
-    return len(opening_stack) < 1
+    return len(cStack) == 0
 }
