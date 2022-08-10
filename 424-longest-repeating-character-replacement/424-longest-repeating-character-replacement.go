@@ -1,17 +1,19 @@
 func characterReplacement(s string, k int) int {
-    counter := make(map[byte]int)
-    var max,res,l,r int             
+    l,r, max:=0,0,0
+    count := make(map[byte]int)
+    res :=0
     for r < len(s){
-        
-        counter[s[r]]++
-        if counter[s[r]] > max {
-            max = counter[s[r]]
+        key := s[r]
+        count[key]++        
+        if count[key]  > max{
+            max =count[key]
         }
-        if (r - l +1) - max >k {
-            counter[s[l]]--
+        
+        if ((r - l) +1 ) - max > k {
+            count[s[l]]--            
             l++
-        } 
-        if r - l +1 > res{
+        }
+        if ((r - l) +1 ) > res{            
             res = r-l+1
         }
         r++
