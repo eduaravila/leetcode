@@ -2,45 +2,50 @@ func checkInclusion(s1 string, s2 string) bool {
     if len(s1) > len(s2){
         return false
     }
-    count1 := make(map[rune]int)
-    count2 := make(map[rune]int)
+    count1,count2 := make(map[rune]int),make(map[rune]int)
     
-    for i,val := range s1{
-        count1[val]++
+    for i,k := range s1{
+        count1[k]++
         count2[rune(s2[i])]++
     }
     
-    matches := 0 
-    for k, val1 := range count1{
-        if val2,e := count2[k];e && val1 == val2 {
-            matches+= count2[k]
-        }
-    }   
-    l := 0
+    matches :=0
     
-    for i:= len(s1) ; i < len(s2) ; i++{
+    for k,v := range count1{
+        if v == count2[k]{
+            matches+=v
+        }
+    }
+    var l int
+    for i := len(s1) ; i < len(s2) ; i++{
         if matches == len(s1){
             return true
         }
-        k := rune(s2[i])
-        count2[k]++
+        key := rune(s2[i])
         
-        if val,e := count1[k]; e && val == count2[k]{ 
-            matches+=val
-        }else if val,e := count1[k]; e && val+1 == count2[k]{
-            matches-=val
+        count2[key]++
+        if count2[key] == count1[key]{
+            matches+=count1[key]
+        }else if count1[key] +1 == count2[key]{
+            matches -= count1[key]
         }
         
-        k = rune(s2[l])
-        count2[k]--
-        if val,e := count1[k]; e && val == count2[k]{ 
-            matches+=val
-        }else if val,e := count1[k]; e && val-1 == count2[k]{
-            matches-=val
-        }
+        key = rune(s2[l])
         
+        count2[key]--
+        if count2[key] == count1[key]{
+            matches+=count1[key]
+        }else if count1[key] - 1 == count2[key]{
+            matches -= count1[key]
+        }
         l++
     }
-    
-    return matches == len(s1) 
+    return matches == len(s1)
 }
+
+// we need to find matches
+// count the letter of s1 and s2
+// total matches == len(s1)
+
+// increase matches if counter1[key] == counter2[key]
+// decrease otherwise
