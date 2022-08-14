@@ -19,7 +19,7 @@ func evalRPN(tokens []string) int {
     nums_stack := []int{}
     
     for _, token := range tokens {
-        if token == "+" || token == "-" || token == "*" || token == "/" {
+        if _,e := strconv.Atoi(token); e != nil {
             a,b :=nums_stack[len(nums_stack)-1],nums_stack[len(nums_stack)-2]                                   
             nums_stack = nums_stack[:len(nums_stack)-2]
             fmt.Println(a,b,token)
