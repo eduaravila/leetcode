@@ -22,7 +22,7 @@ func evalRPN(tokens []string) int {
         if _,e := strconv.Atoi(token); e != nil {
             a,b :=nums_stack[len(nums_stack)-1],nums_stack[len(nums_stack)-2]                                   
             nums_stack = nums_stack[:len(nums_stack)-2]
-            fmt.Println(a,b,token)
+            
             nums_stack  = append(nums_stack,performOperation(b,a,token))            
         }else{
             var num int
