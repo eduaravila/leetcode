@@ -13,7 +13,7 @@ func carFleet(target int, position []int, speed []int) int {
         return convineTargetSpeed[a][0] >= convineTargetSpeed[b][0]
     })
     
-    fmt.Println(convineTargetSpeed)
+    
     stack :=[]float64{}
     for _, val := range convineTargetSpeed{
         
