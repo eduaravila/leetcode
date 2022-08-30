@@ -1,24 +1,22 @@
 func subsets(nums []int) [][]int {
     res := [][]int{}
-    visited := make(map[string]bool)
-    solution(nums,visited,&res)
+    solution(nums,[]int{},&res)
     return append(res,[]int{})
 }
 
-func solution(nums []int,visited map[string]bool,res *[][]int) {
+func solution(nums, current []int,res *[][]int) {
     if len(nums) < 1{
         return 
     }
     
-    if visited[fmt.Sprintf("%v",nums)]{
-        return
-    }
-    *res = append(*res, nums)
-    for i := range nums {           
-        newNums := append([]int{},nums[0:i]...)
-        newNums = append(newNums,nums[i+1:]...)      
-        solution(newNums,visited,res)                
-    }
-    visited[fmt.Sprintf("%v",nums)] = true
+   
+    
+    for i,num := range nums {                   
+        current = append(current,num)
+        *res = append(*res, current)
+        newNums := append([]int{},nums[i+1:]...)
+        solution(newNums,current,res)                
+        current = append([]int{},current[:len(current)-1]...)
+    }    
     
 }
