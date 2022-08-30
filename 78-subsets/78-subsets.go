@@ -1,22 +1,20 @@
 func subsets(nums []int) [][]int {
     res := [][]int{}
-    solution(nums,[]int{},&res)
+    solution(nums,[]int{},&res,0)
     return append(res,[]int{})
 }
 
-func solution(nums, current []int,res *[][]int) {
-    if len(nums) < 1{
+func solution(nums, subset []int,res *[][]int,current int) {
+    if current >= len(nums){
         return 
     }
-    
-   
-    
-    for i,num := range nums {                   
-        current = append(current,num)
-        *res = append(*res, current)
-        newNums := append([]int{},nums[i+1:]...)
-        solution(newNums,current,res)                
-        current = append([]int{},current[:len(current)-1]...)
+
+    for i := current ; i < len(nums) ; i++ {
+        num := nums[i]
+        subset = append(subset,num)
+        *res = append(*res, subset)
+        solution(nums,subset,res,i+1)                
+        subset = append([]int{},subset[:len(subset)-1]...)
     }    
     
 }
