@@ -2,7 +2,9 @@ func exist(board [][]byte, word string) bool {
     
     for x := range board{
         for y := range board[x]{
-            
+            if board[x][y] == '*'{
+                continue
+            }
             if solution(board,x,y,0,word){
                 return true
             }
