@@ -16,7 +16,7 @@ func solution(candidates[]int,target int, convination []int, res *[][]int)bool{
     
     for i,candidate := range candidates{
         if candidate > target {
-            continue
+            return false
         }
         if i > 0 && candidates[i] == candidates[i-1]{
             continue
