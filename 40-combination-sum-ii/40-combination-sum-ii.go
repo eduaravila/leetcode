@@ -15,10 +15,8 @@ func solution(candidates[]int,target int, convination []int, res *[][]int)bool{
     
     
     for i,candidate := range candidates{
-        if candidate > target {
-            return false
-        }
-        if i > 0 && candidates[i] == candidates[i-1]{
+        
+        if (i > 0 && candidates[i] == candidates[i-1]) || candidate > target{
             continue
         }
         newSlice := append([]int{},candidates[i+1:]...)
