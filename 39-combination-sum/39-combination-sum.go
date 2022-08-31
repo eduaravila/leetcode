@@ -17,7 +17,7 @@ func solution(candidates []int, current int,subset []int, res *[][]int) bool{
         if solution(append([]int{},candidates[i:]...), (current-candidate),subset,res){
             *res  = append(*res, subset)            
         }
-        subset = append([]int{},subset[1:]...)
+        subset = subset[1:]
     }
     
     return false
