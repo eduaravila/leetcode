@@ -1,14 +1,9 @@
 func exist(board [][]byte, word string) bool {       
-    visited := [][]bool{}
-    for range board{
-        visited = append(visited,make([]bool,len(board[0])))
-    }
+    
     for x := range board{
         for y := range board[x]{
-            if visited[x][y]{
-                continue
-            }
-            if solution(board,visited,x,y,0,word){
+            
+            if solution(board,x,y,0,word){
                 return true
             }
         }
@@ -16,9 +11,9 @@ func exist(board [][]byte, word string) bool {
     return false
 }
 
-func solution(board [][]byte,visited [][]bool, x,y,current int, word string)bool{
+func solution(board [][]byte, x,y,current int, word string)bool{
     
-    if x < 0 || x >= len(board) || y < 0 || y >= len(board[0]) || visited[x][y]  || current >= len(word) {
+    if x < 0 || x >= len(board) || y < 0 || y >= len(board[0])  || current >= len(word) || board[x][y] == '*'{
         return false
     }        
     if board[x][y] != byte(word[current]) {
@@ -28,10 +23,11 @@ func solution(board [][]byte,visited [][]bool, x,y,current int, word string)bool
     if current == len(word)-1 && board[x][y] == byte(word[current]) {
         return true
     }
-    visited[x][y] = true
-    if solution(board,visited,x,y+1,current+1,word) || solution(board,visited,x,y-1,current+1,word) || solution(board,visited,x+1,y,current+1,word) || solution(board,visited,x-1,y,current+1,word){
+    
+    board[x][y] = '*'
+    if solution(board,x,y+1,current+1,word) || solution(board,x,y-1,current+1,word) || solution(board,x+1,y,current+1,word) || solution(board,x-1,y,current+1,word){
         return true
     }
-    visited[x][y] =false
+    board[x][y] = word[current]
     return false
 }
