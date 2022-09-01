@@ -30,12 +30,11 @@ func solution(s string,current int,subString []string, res *[][]string ){
     }
     
     for i := current ; i < len(s) ; i++ {
-        if !isPalindrome(s[current:i+1]){
-            continue
+        if isPalindrome(s[current:i+1]){               
+            subString  = append(subString, s[current:i+1])
+            solution(s,i+1,subString,res)
+            subString = subString[:len(subString)-1]
         }
-        subString  = append(subString, s[current:i+1])
-        solution(s,i+1,subString,res)
-        subString = subString[:len(subString)-1]
     }
     
 }
