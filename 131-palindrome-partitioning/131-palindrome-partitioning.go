@@ -18,25 +18,23 @@ func isPalindrome(input string)bool{
 
 func partition(s string) [][]string {
     res := [][]string{}
-    subString := []string{}
-    
-    solution(s,0,&subString,&res)
+    solution(s,0,[]string{},&res)
     return res
 }
 
-func solution(s string,current int,subString *[]string, res *[][]string ){
+func solution(s string,current int,subString []string, res *[][]string ){
     
     if current >= len(s){        
-        *res = append(*res,append([]string{},*subString...))
+        *res = append(*res,append([]string{},subString...))
         return
     }
     
     for i := current ; i < len(s) ; i++ {
         if isPalindrome(s[current:i+1]){
-            *subString  = append(*subString, s[current:i+1])
-            fmt.Println(*subString)
+            subString  = append(subString, s[current:i+1])
+            
             solution(s,i+1,subString,res)
-            *subString = (*subString)[:len(*subString)-1]
+            subString = subString[:len(subString)-1]
         }
     }
     
