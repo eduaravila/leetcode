@@ -1,24 +1,25 @@
 func combinationSum(candidates []int, target int) [][]int {
     res := [][]int{}
-    
-    solution(candidates, 0, target, []int{}, &res)
+    solution(candidates,0,target,[]int{}, &res)
     return res
 }
 
-func solution(candidates []int,candidatesI, current int, subset []int, res *[][]int) bool{    
-    if current == 0 {
-         return true
+func solution(candidates []int,current, target int,convination []int, res *[][]int)bool{
+    if target == 0 {
+        return true
     }
-    for i := candidatesI ; i < len(candidates) ; i++ {
+    
+    for i := current ;i< len(candidates);i++{
         candidate := candidates[i]
-        if candidate > current{// continue because input is not sorted
+        if candidate > target {
             continue
         }
-        subset = append([]int{candidate}, subset...)
-        if solution(candidates, i,current-candidate ,subset, res) {
-            *res  = append(*res, subset)
+        
+        convination = append(convination,candidate)
+        if solution(candidates,i,target-candidate,convination, res){
+            *res = append(*res,convination)
         }
-        subset = append([]int{},subset[1:]...)
+        convination = append([]int{},convination[:len(convination)-1]...)
     }
     return false
 }
