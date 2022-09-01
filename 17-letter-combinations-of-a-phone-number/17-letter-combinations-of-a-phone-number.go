@@ -22,10 +22,11 @@ func solution(digits []string,res *[]string,current []string)bool{
     }
     
     for _,letter := range letters[digits[0]] {        
-        r := solution(digits[1:],res,append(current,letter))
-        if r {
-            *res= append(*res,strings.Join(append(current,letter),""))
+        current = append(current,letter)
+        if solution(digits[1:],res,current){
+            *res= append(*res,strings.Join(current,""))
         }
+        current = append([]string{},current[:len(current)-1]...)
     } 
     
     return false
