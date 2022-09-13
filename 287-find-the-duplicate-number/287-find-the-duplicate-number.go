@@ -1,0 +1,23 @@
+func findDuplicate(nums []int) int {
+    slow,fast := 0,0
+    
+    for {
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast {
+            break
+        }
+        
+    }
+    slow = 0
+    slow2:= fast 
+    
+    for  {
+        slow = nums[slow]
+        slow2 = nums[slow2]
+        if slow == slow2{
+            return slow
+        }
+    }
+    return 0
+}
