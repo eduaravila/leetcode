@@ -6,24 +6,25 @@
  * }
  */
 func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
-    mergeList := &ListNode{}
-    tail := mergeList
+    merged_head := &ListNode{}
+    current := merged_head
     
     for list1 != nil && list2 != nil{
-        if list1.Val < list2.Val {
-            tail.Next = list1
+        if list1.Val < list2.Val{
+            current.Next=list1
             list1 = list1.Next
         }else{
-            tail.Next = list2
+            current.Next=list2
             list2 = list2.Next
         }
-        tail = tail.Next
+        current = current.Next
     }
-    if list1 != nil {
-        tail.Next = list1
+    
+    if list1 != nil{
+        current.Next = list1
     }
     if list2 != nil{
-        tail.Next = list2
+        current.Next = list2
     }
-    return mergeList.Next
+    return merged_head.Next
 }
