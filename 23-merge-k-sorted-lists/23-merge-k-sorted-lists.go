@@ -33,8 +33,7 @@ func mergeKLists(lists []*ListNode) *ListNode {
     
     res := &ListNode{Val: -postInf}
     
-    for _, list := range lists{
-        fmt.Println(list)
+    for _, list := range lists{        
         res = mergeList(res,list)
     }
     
