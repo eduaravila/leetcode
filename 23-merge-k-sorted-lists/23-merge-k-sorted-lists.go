@@ -29,13 +29,13 @@ func mergeList(a,b *ListNode) *ListNode{
 }
 
 func mergeKLists(lists []*ListNode) *ListNode {
-    postInf := int(^uint(0)>>1)
-    
-    res := &ListNode{Val: -postInf}
-    
-    for _, list := range lists{        
+    if len(lists) < 1{
+        return nil
+    }
+    res := lists[0]    
+    for _, list := range lists[1:]{        
         res = mergeList(res,list)
     }
     
-    return res.Next
+    return res
 }
