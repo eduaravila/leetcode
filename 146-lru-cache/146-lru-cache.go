@@ -21,7 +21,8 @@ func (l *List) Remove(node *Node){
     
     prev.next = next
     next.prev = prev
-    
+    node.prev = nil
+    node.next = nil
 }
 
 
@@ -52,8 +53,7 @@ func Constructor(capacity int) LRUCache {
 }
 
 
-func (this *LRUCache) Get(key int) int {
-    
+func (this *LRUCache) Get(key int) int {    
     if _,e := this.cache[key]; !e{
         return -1
     }
