@@ -1,81 +1,78 @@
 type Node struct {
-    val int
-    key int
-    next *Node
-    prev *Node
+    Val int
+    Key int
+    Next *Node
+    Prev *Node
 }
 
 type List struct {
-    head *Node
-    tail *Node
+    Head *Node
+    Tail *Node    
 }
 
-func newList()*List{
-    list := &List{head: &Node{},tail:&Node{} } 
-    list.head.next, list.tail.prev = list.tail,list.head
+func NewList()*List{    
+    head, tail := &Node{}, &Node{}
+    head.Next = tail
+    tail.Prev = head
+    list := &List{Head:head, Tail:tail}
     return list
 }
 
-func (l *List) Remove(node *Node){
-    prev,next := node.prev,node.next
-    
-    prev.next = next
-    next.prev = prev
-    node.prev = nil
-    node.next = nil
+func (l *List) Remove(node *Node){    
+    prev,next := node.Prev, node.Next
+    prev.Next = next
+    next.Prev = prev
 }
 
-
-
-func (l *List) Insert(node *Node){    
-    prev := l.tail.prev
-    prev.next = node
-    l.tail.prev = node
-    node.next = l.tail
-    node.prev = prev
+func (l *List) Insert(node *Node){
+    prev := l.Tail.Prev
+    node.Prev = prev
+    node.Next = l.Tail
+    prev.Next = node
+    l.Tail.Prev = node
     
 }
-
 
 type LRUCache struct {
-    cache map[int]*Node    
-    list *List    
-    limit int
+    values map[int]*Node
+    list *List
+    size int
 }
-
 
 func Constructor(capacity int) LRUCache {
     return LRUCache{
-        cache: make(map[int]*Node),
-        list: newList(),
-        limit: capacity,
+        size: capacity,
+        values: make(map[int]*Node),
+        list: NewList(),
     }
 }
 
-
-func (this *LRUCache) Get(key int) int {    
-    if _,e := this.cache[key]; !e{
+func (this *LRUCache) Get(key int) int {
+    node, e := this.values[key]
+    if !e {
         return -1
     }
-    this.list.Remove(this.cache[key])
-    this.list.Insert(this.cache[key])
-    return this.cache[key].val
+    this.list.Remove(node)
+    updateNode := &Node{Val:node.Val,Key: node.Key}
+    this.list.Insert(updateNode)
+    this.values[key] = updateNode
+    return node.Val
 }
 
-
-func (this *LRUCache) Put(key int, value int)  {
-    if node,e := this.cache[key]; e{
-        this.list.Remove(node)        
-    }    
-    node := &Node{val:value,key:key}
-    this.cache[key] = node
+func (this *LRUCache) Put(key int, value int) {
+    if node,e := this.values[key]; e{
+        this.list.Remove(node)
+    }
     
-    this.list.Insert(node)  
-    if len(this.cache) > this.limit{        
-        nodeToRemove := this.list.head.next
-        this.list.Remove(nodeToRemove)
-        delete(this.cache,nodeToRemove.key)
-    }    
+    newNode := &Node{Val:value, Key:key}
+    this.list.Insert(newNode)
+    this.values[key] = newNode
+    
+    if len(this.values) > this.size{
+        leastUsedNode := this.list.Head.Next
+        this.list.Remove(leastUsedNode)
+        delete(this.values,leastUsedNode.Key)        
+    }
 }
 
 
