@@ -22,6 +22,8 @@ func (l *List) Remove(node *Node){
     prev,next := node.Prev, node.Next
     prev.Next = next
     next.Prev = prev
+    node.Next = nil
+    node.Prev = nil
 }
 
 func (l *List) Insert(node *Node){
@@ -53,9 +55,7 @@ func (this *LRUCache) Get(key int) int {
         return -1
     }
     this.list.Remove(node)
-    updateNode := &Node{Val:node.Val,Key: node.Key}
-    this.list.Insert(updateNode)
-    this.values[key] = updateNode
+    this.list.Insert(node)    
     return node.Val
 }
 
