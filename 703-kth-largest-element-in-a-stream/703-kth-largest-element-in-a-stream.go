@@ -1,49 +1,49 @@
 import ("container/heap")
 
-type minH []int
+type intHeap []int
 
-func (m minH) Less(a,b int)bool { return m[a] < m[b] }
-func (m minH) Len()int { return len(m) }
-func (m minH) Swap(a,b int) { m[a],m[b] = m[b],m[a] }
+func (i intHeap) Less(a,b int)bool {return i[a] < i[b]}
+func (i intHeap) Len()int {return len(i)}
+func (i intHeap) Swap(a,b int) { i[a], i[b] = i[b], i[a] }
 
-func (m *minH) Pop()interface{}{
-    n := len(*m)-1
-    temp := (*m)[n]
-    *m = (*m)[:n]
+func (i *intHeap) Pop() interface{} {
+    temp := (*i)[i.Len()-1]
+    *i = (*i)[:i.Len()-1]
     return temp
 }
 
-func (m *minH) Push(val interface{}){
-    *m = append(*m, val.(int))
+func (i *intHeap) Push(val interface{}){
+    *i = append(*i, val.(int))
 }
 
 type KthLargest struct {
+    intH *intHeap
     size int
-    minH *minH
 }
 
+
 func Constructor(k int, nums []int) KthLargest {
-    
-    minH := &minH{}
-    *minH = append(*minH, nums...)
+    minH := &intHeap{}
+    *minH = append([]int{}, nums...)
     heap.Init(minH)
-    
-    for  minH.Len() > k{                        
-        heap.Pop(minH)        
+    for minH.Len() > k{
+        heap.Pop(minH)
     }
     return KthLargest{
+        intH: minH,
         size: k,
-        minH: minH,
     }
 }
 
 
 func (this *KthLargest) Add(val int) int {
-    heap.Push(this.minH,val)
-    if this.minH.Len() > this.size{
-        heap.Pop(this.minH)
+    heap.Push(this.intH, val)
+    if this.intH.Len() > this.size{
+        heap.Pop(this.intH)
     }
-    return (*this.minH)[0]
+    
+    
+    return (*this.intH)[0]
 }
 
 
