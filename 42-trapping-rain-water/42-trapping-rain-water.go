@@ -11,14 +11,14 @@ func trap(height []int) int {
     lm,rm := height[l],height[r]
     var res int
     for l < r {
-        lc,rc := height[l],height[r]
-        if lc < rc {
-            lm = getMax(lc,lm)
-            res += lm - lc
+        
+        if height[l] < height[r] {
+            lm = getMax(height[l],lm)
+            res += lm - height[l]
             l++
         }else{
-            rm = getMax(rc,rm)
-            res += rm - rc
+            rm = getMax(height[r],rm)
+            res += rm - height[r]
             r--
         }        
     }
