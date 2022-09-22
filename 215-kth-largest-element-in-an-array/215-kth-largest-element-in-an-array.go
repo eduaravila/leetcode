@@ -1,40 +1,31 @@
-import ("container/heap")
-
-type IntHeap []int
-
-
-func (h IntHeap) Len() int           { return len(h) }
-func (h IntHeap) Less(i, j int) bool { return h[i] < h[j] }
-func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
-
-func (h *IntHeap) Push(x interface{}) {
-	// Push and Pop use pointer receivers because they modify the slice's length,
-	// not just its contents.
-	*h = append(*h, x.(int))
+func solutionSplit(nums []int, l, r int) int {
+    pivot :=  r
+    i := l
+    for _, num := range nums[l:r]{
+      if num <= nums[pivot]{
+        nums[l],nums[i] = nums[i], nums[l]
+        l++
+        }
+        i++
+    }
+    nums[l], nums[pivot] = nums[pivot], nums[l]
+    return l
 }
-
-func (h *IntHeap) Pop() interface{} {
-	old := *h
-	n := len(old)
-	x := old[n-1]
-	*h = old[0 : n-1]
-	return x
-}
-
 
 func findKthLargest(nums []int, k int) int {
     
-    minH := &IntHeap{}
-
-    heap.Init(minH)
-
-    for _,num := range nums{
-        heap.Push(minH,num)
+    l, r := 0,len(nums)-1
+    k = len(nums) - k
+    for l < r {
+        pivot := solutionSplit(nums,l , r)
+        
+        if k < pivot {
+            r = pivot - 1
+        }else if k > pivot{
+            l = pivot + 1
+        }else{
+            break // if k == pivot we are sure that the nums[pivot] value is the k largerst
+        }
     }
-
-    for minH.Len() > k {
-        heap.Pop(minH)
-    }
-    
-    return heap.Pop(minH).(int)
+    return nums[k]
 }
