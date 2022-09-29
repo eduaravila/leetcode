@@ -12,7 +12,7 @@ func canCompleteCircuit(gas []int, cost []int) int {
         current := (start + 1 )% len(gas)
         cGas := (gas[start] - cost[start]) + gas[current]
         
-        for cGas > 0  {
+        for cGas >= cost[current]   {
             if current == start {
                 return start
             }
@@ -20,9 +20,7 @@ func canCompleteCircuit(gas []int, cost []int) int {
             cGas =  (cGas - cost[current])      
             current = (current + 1 )% len(gas)
             cGas += gas[current]
-            if cGas < cost[current]{
-                break
-            }
+            
         }
     }
     return -1 
