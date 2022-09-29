@@ -1,18 +1,16 @@
 func canCompleteCircuit(gas []int, cost []int) int {
-    startingPoints := []int{}
-    
-    for i := range gas{
-        if gas[i] >= cost[i]{
-            startingPoints = append(startingPoints, i)
+    visited := make([]bool,len(gas))        
+    for start := range gas{
+        if visited[start] || gas[start] < cost[start]{
+            continue
         }
-    }
-    for len(startingPoints) > 0{
-        start := startingPoints[len(startingPoints)-1]
-        startingPoints = startingPoints[:len(startingPoints)-1]
+                    
         current := (start + 1 )% len(gas)
         cGas := (gas[start] - cost[start]) + gas[current]
         
-        for cGas >= cost[current]   {
+        for cGas >= cost[current] {
+            
+            visited[current] = true
             if current == start {
                 return start
             }
