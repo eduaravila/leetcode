@@ -14,19 +14,19 @@ func canCompleteCircuit(gas []int, cost []int) int {
     var current int
     for current < len(gas){
         
-        sum, size,next := gas[current] - cost[current], 0,current
+        sum := gas[current] - cost[current] 
         if sum < 0 || visited[current]{
             current++
             continue
         }
-        for sum > 0 && size < len(gas) {
-            visited[next] = true
-            next = (next +1 )%len(gas)
-            sum += gas[next] - cost[next]
-            size++
+        start := current
+        for sum > 0 && current < len(gas)-1 {            
+            current++
+            sum += gas[current] - cost[current]
+            
         }
-        if size >= len(gas)-1{
-            return current
+        if current >= len(gas)-1{
+            return start
         }
         current++
     }
