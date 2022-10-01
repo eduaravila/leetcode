@@ -1,25 +1,38 @@
 func canCompleteCircuit(gas []int, cost []int) int {
-    visited := make([]bool,len(gas))        
-    for start := range gas{
-        if visited[start] || gas[start] < cost[start]{
+    
+    visited := make([]bool,len(gas))
+    var current int
+    for current < len(gas) {
+        if gas[current] < cost[current] || visited[current] {
+            current++
             continue
         }
-                    
-        current := (start + 1 )% len(gas)
-        cGas := (gas[start] - cost[start]) + gas[current]
-        
-        for cGas >= cost[current] {
-            
-            visited[current] = true
-            if current == start {
-                return start
+        var tripSize int
+        cGas, cStation := gas[current], current
+        for cGas > 0 {
+            fmt.Println(cGas,cStation,tripSize)
+            if tripSize == len(gas){
+                return current
             }
-            
-            cGas =  (cGas - cost[current])      
-            current = (current + 1 )% len(gas)
-            cGas += gas[current]
-            
+            visited[cStation] = true
+            nextStation := (cStation + 1)% len(gas)
+            cGas = (cGas - cost[cStation]) 
+            if cGas < 0 {
+                break
+            }
+            cGas += gas[nextStation]
+            cStation = nextStation            
+            tripSize++
         }
+        current++
     }
-    return -1 
+    
+    return -1
 }
+
+/*
+tripSize 0 1 2 3 4 5
+    cGas 4 8 7 6 5 0
+cStation 3 4 0 1 2 3
+current  3 
+*/
