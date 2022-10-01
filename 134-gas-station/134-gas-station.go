@@ -9,11 +9,7 @@ func canCompleteCircuit(gas []int, cost []int) int {
         }
         var tripSize int
         cGas, cStation := gas[current], current
-        for cGas > 0 {
-            fmt.Println(cGas,cStation,tripSize)
-            if tripSize == len(gas){
-                return current
-            }
+        for tripSize < len(gas) {                        
             visited[cStation] = true
             nextStation := (cStation + 1)% len(gas)
             cGas = (cGas - cost[cStation]) 
@@ -23,6 +19,9 @@ func canCompleteCircuit(gas []int, cost []int) int {
             cGas += gas[nextStation]
             cStation = nextStation            
             tripSize++
+        }
+        if tripSize == len(gas){
+            return current
         }
         current++
     }
