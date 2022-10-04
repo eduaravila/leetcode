@@ -1,22 +1,24 @@
-func checkValidString(s string) bool {    
-    return solution(0,0,strings.Split(s,""), make(map[string]bool))
-}
-
-func solution(size,current int, s []string, memo map[string]bool)bool{
-    key := fmt.Sprintf("%d,%d",size, current)
-       
-    if size == len(s) || current < 0 {
-        return current == 0
-    } 
-    if val,e := memo[key];e{
-        return val
-    } 
-    if s[size] == "("{
-        memo[key] = solution(size+1,current+1,s,memo)
-    }else if s[size] == ")" {
-        memo[key] = solution(size+1,current-1,s,memo)
-    }else {                        
-        memo[key] = solution(size+1, current+1,s,memo) || solution(size+1, current-1,s,memo) || solution(size+1,current,s,memo)
+func checkValidString(s string) bool {
+    var min,max int
+    
+    for _,c := range s{
+        if c =='('{
+            min++
+            max++
+        }else if c == '*'{
+            max++
+            min--
+        }else{
+            min--
+            max--
+        }
+        if max < 0{
+            return false
+        }
+        if min < 0{
+            min =0
+        }    
     }
-    return memo[key]
+    
+    return min == 0
 }
