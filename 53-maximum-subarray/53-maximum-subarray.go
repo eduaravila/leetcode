@@ -5,21 +5,18 @@ func getMax(a,b int)int{
     return b
 }
 
-func getMin(a,b int)int{
-    if a < b {
-        return a
-    }
-    return b
-}
-
 func maxSubArray(nums []int) int {
-    var max,sum int
-        
-    max,min,sum := nums[0],nums[0],nums[0]
-    for _, num := range nums{
-        sum += num
-        max = getMax(max, sum- min)
-        min = getMin(min, sum)
+    var total,max,l,r int
+    inf := int(^uint(0)>>1)
+    max = -inf
+    for r < len(nums){
+        total += nums[r]
+        max = getMax(max,total)
+        for total < 0 {
+           total -=nums[l]
+           l++
+        }
+        r++
     }
     return max
 }
