@@ -1,41 +1,30 @@
-
-
-func canCompleteCircuit(gas []int, cost []int) int {    
+func canCompleteCircuit(gas []int, cost []int) int {
+    var tgas,tcost int
     
-    var a,b int
     for i := range gas{
-        a+= gas[i]
-        b+= cost[i]
+        tgas+=gas[i]
+        tcost+=cost[i]
     }
-    if a < b {
+    if tcost > tgas{
         return -1
     }
-    visited := make([]bool,len(gas))
-    var current int
-    for current < len(gas){
-        
-        sum := gas[current] - cost[current] 
-        if sum < 0 || visited[current]{
-            current++
+    
+    var i int
+    for i < len(gas){
+        if gas[i] < cost[i]{
+            i++
             continue
         }
-        start := current
-        for sum > 0 && current < len(gas)-1 {            
-            current++
-            sum += gas[current] - cost[current]
-            
+        sum := gas[i] - cost[i]
+        r := i+1
+        for sum >=0 && r < len(gas){
+            sum += gas[r] - cost[r]
+            r++
         }
-        if current >= len(gas)-1{
-            return start
+        if r >=len(gas) || sum >=0{
+            return i
         }
-        current++
+        i=r
     }
     return -1
 }
-
-/*
-tripSize 0 1 2 3 4 5
-    cGas 4 8 7 6 5 0
-cStation 3 4 0 1 2 3
-current  3 
-*/
