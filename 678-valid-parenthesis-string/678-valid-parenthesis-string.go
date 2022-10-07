@@ -43,11 +43,12 @@ func checkValidString(s string) bool {
             min--
             max--
         }
-        if min < 0{
-            min = 0
-        }
+        
         if max < 0{
             return false
+        }
+        if min < 0{
+            min = 0
         }
         r++
     }
