@@ -19,28 +19,38 @@
 // ) ) )
 // 0-2 1-2 -1-2
 
+// min 1 0 0
+// max 1 2 1
+// i  0 1 2
+
+// in max * is always (
+// for min * is always ) 
+// reset min to 0 
+// if max < 0 return false
+// if min > 0 return false
+
 func checkValidString(s string) bool {
-    return solution(s, 0,0, make(map[string]bool))
+    var r, min,max int
+    
+    for r < len(s){
+        if s[r] == '('{
+            min++
+            max++
+        }else if s[r] == '*'{
+            min--
+            max++
+        }else{
+            min--
+            max--
+        }
+        if min < 0{
+            min = 0
+        }
+        if max < 0{
+            return false
+        }
+        r++
+    }
+    return min == 0
 }
 
-func solution(s string, current, stack int, memo map[string]bool)bool{
-    key := fmt.Sprintf("%d-%d",current,stack)
-    if val,e := memo[key];e{
-        return val
-    }
-    if stack < 0 || current > len(s)-1 && stack > 0 {
-        return false
-    }
-    if current > len(s)-1 && stack==0{
-        return true
-    }
-    
-    if s[current] == '('{
-        memo[key] = solution(s,current+1,stack+1,memo)
-    }else if s[current] == ')'{
-        memo[key] = solution(s,current+1,stack-1,memo)
-    }else{
-        memo[key] = solution(s,current+1,stack+1,memo) || solution(s,current+1,stack-1,memo) || solution(s,current+1,stack,memo)
-    }
-    return memo[key]
-}
