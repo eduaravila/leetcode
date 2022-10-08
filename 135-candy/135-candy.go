@@ -31,7 +31,7 @@ func candy(ratings []int) int {
         i--
     }
     var res int
-    fmt.Println(candies)
+    
     for _,candie := range candies{
         res+=candie
     }
