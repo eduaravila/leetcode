@@ -13,18 +13,17 @@ func removeDuplicateLetters(s string) string {
     
     var r int
     stack := []rune{}
-    res := make([]rune,('z' - 'a')+1)        
+    unique := make([]rune,('z' - 'a')+1)        
 
     for r < len(s){        
-        for len(stack) > 0 && stack[len(stack)-1] > rune(s[r]) && counter[rune(stack[len(stack)-1])-'a'] > 0 && res[rune(s[r])-'a'] < 1{                     
-                res[rune(stack[len(stack)-1])-'a']--
-                stack = stack[:len(stack)-1]            
-            
+        for len(stack) > 0 && stack[len(stack)-1] > rune(s[r]) && counter[rune(stack[len(stack)-1])-'a'] > 0 && unique[rune(s[r])-'a'] < 1{                     
+                unique[rune(stack[len(stack)-1])-'a']--
+                stack = stack[:len(stack)-1]
         }        
         
-        if res[rune(s[r])-'a']<1{
+        if unique[rune(s[r])-'a']<1{
             stack = append(stack,rune(s[r]))
-            res[rune(s[r])-'a']++
+            unique[rune(s[r])-'a']++
         }
         counter[rune(s[r])-'a']--
         r++
