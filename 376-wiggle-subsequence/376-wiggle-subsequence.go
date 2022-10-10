@@ -6,26 +6,23 @@ func getMax(a,b int)int{
 }
 
 func wiggleMaxLength(nums []int) int {
-    return solution(nums,1,1,1, make(map[string]int))
+    return solution(nums,1,1,1)
 }
 
-func solution(nums []int,current, pos,neg int, memo map[string]int) int{
-    key := fmt.Sprintf("%d-%d-%d",current,pos,neg)
-    if val,e := memo[key];e{
-        return val
-    }
+func solution(nums []int,current, pos,neg int) int{
+    
     if current > len(nums)-1{        
         return getMax(pos,neg)
     }
     
     if nums[current] < nums[current-1] {
-        memo[key] =solution(nums,current+1,neg+1,neg,memo)    
+        return solution(nums,current+1,neg+1,neg)    
     }else if nums[current] > nums[current-1] {
-        memo[key] =solution(nums,current+1,pos,pos+1,memo)
+        return solution(nums,current+1,pos,pos+1)
     }else{
-        memo[key] = solution(nums,current+1,pos,neg ,memo)  
+        return solution(nums,current+1,pos,neg)  
     }
-    return memo[key]
+    return 1
 }
 
 // Input: nums = [1,17,5,10,13,15,10,5,16,8]
