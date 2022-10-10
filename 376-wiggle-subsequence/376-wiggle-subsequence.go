@@ -1,3 +1,10 @@
+func getMin(a,b int)int{
+    if a < b{
+        return a
+    }
+    return b
+}
+
 func getMax(a,b int)int{
     if a > b {
         return a
@@ -6,22 +13,29 @@ func getMax(a,b int)int{
 }
 
 func wiggleMaxLength(nums []int) int {
-    return solution(nums,1,1,1)
+    if len(nums) < 3 {        
+        set := make(map[int]bool)
+        for _,c := range nums{
+            set[c]= true
+        }
+        return len(set)
+    }
+    return getMin(solution(nums, 1,1,1),len(nums))
 }
 
-func solution(nums []int,current, pos,neg int) int{
-    
-    if current > len(nums)-1{        
+func solution(nums []int,current,pos,neg int) int{   
+    if current > len(nums)-1{
         return getMax(pos,neg)
     }
-    
-    if nums[current] < nums[current-1] {
-        return solution(nums,current+1,neg+1,neg)    
-    }else if nums[current] > nums[current-1] {
-        return solution(nums,current+1,pos,pos+1)
+ 
+    if nums[current-1] > nums[current]{            
+        return solution(nums,current+1,neg+1,neg)            
+    }else if nums[current-1] < nums[current] {
+        return solution(nums,current+1,pos,pos+1) 
     }else{
-        return solution(nums,current+1,pos,neg)  
+        return solution(nums,current+1,pos,neg) 
     }
+    
     return 1
 }
 
