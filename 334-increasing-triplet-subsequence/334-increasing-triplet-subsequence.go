@@ -1,15 +1,22 @@
+
 func increasingTriplet(nums []int) bool {
+    vals := []int{}
+    for i := 0 ; i < 3 ; i++{
+        vals = append(vals,int(^uint(0)>>1))
+    }
     
-    m := int(^uint(0)>>1)
-    l :=m
-    for i := range nums {
-        if nums[i] <= l{
-            l = nums[i]
-        }else if nums[i] <=m{
-            m = nums[i]
-        }else {
+    for _,num := range nums{
+        var i int
+        for i < len(vals){
+            if vals[i] >= num{
+                vals[i] = num
+                break
+            }
+            i++
+        }
+        if i >=3 {
             return true
         }
     }
-    return false
+    return vals[2] != int(^uint(0)>>1)
 }
