@@ -12,8 +12,7 @@ func flatten(root *TreeNode)  {
     }
     stack := []*TreeNode{}
     solution(root, &stack)
-    fmt.Println(stack)
-    
+        
     var prev *TreeNode
     current:= stack[len(stack)-1]
     for len(stack) > 0{        
