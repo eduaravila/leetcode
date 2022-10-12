@@ -19,8 +19,7 @@ func carFleet(target int, position []int, speed []int) int {
     var i int
     stack := []float64{}   
     for i < len(position) {    
-        timeToComplete := ( (float64(target - cars[i][0])) / float64(cars[i][1]))
-        stack = append(stack,timeToComplete)
+        stack = append(stack,((float64(target - cars[i][0])) / float64(cars[i][1])))
         if len(stack) > 1 && stack[len(stack)-1] <= stack[len(stack)-2] {
             stack = stack[:len(stack)-1]
         }
