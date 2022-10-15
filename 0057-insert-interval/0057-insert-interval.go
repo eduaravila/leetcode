@@ -1,63 +1,44 @@
-func getMax(a,b int)int{
-    if a > b{
+func getMin(a,b int)int{
+    if a < b {
         return a
     }
     return b
 }
 
-func getMin(a,b int)int{
-    if a < b{
+func getMax(a,b int)int{
+    if a > b {
         return a
     }
     return b
 }
 
 func insert(intervals [][]int, newInterval []int) [][]int {
-    a_new,b_new := newInterval[0],newInterval[1]
-    var i int
+    
+    startNew,endNew := newInterval[0], newInterval[1]
     res := [][]int{}
-    for i < len(intervals) && intervals[i][1] < a_new {
-        res = append(res,intervals[i])
+    var i int
+    
+    // insert smaller values than interval
+    for i < len(intervals) && intervals[i][1] < startNew {
+        res = append(res, intervals[i])
         i++
     }
     
-    new_range := []int{a_new,b_new}
-    for i < len(intervals) && intervals[i][0] <= b_new  {
-        new_range = []int{getMin(new_range[0],intervals[i][0]),getMax(new_range[1],intervals[i][1])}
+    mergeInterval := []int{startNew,endNew}
+    for i <len(intervals) && mergeInterval[1] >= intervals[i][0]{
+        mergeInterval = []int{getMin(mergeInterval[0],intervals[i][0]), getMax(mergeInterval[1],intervals[i][1])}
         i++
     }
     
-    res = append(res,new_range)
-    
-    res = append(res,intervals[i:]...)
+    res= append(res, mergeInterval)
+    // insert bigger values
+    res = append(res, intervals[i:]...)
     return res
 }
 
-// intervals = [[1,3],[6,9]], newInterval = [2,5]
-
-// a_new = 2, b_new = 5
-// start: 0 
-// current: [1,3]
-// end: 0 
-// current: [1,3]
-
-
-// a_new = 4 b_new = 8
-// start = 0,1
-// current [1,2],[3,5]
-// end =0,1,2,3
-// current [1,2],[3,5]
-
-
-
-
-// a,b = current[0],current[1]
-// a_range,b_range := interval[i][0],interval[i][1]
-// [1,2],[3,4] , new_interval = [5,6]
-// [1,2],[3,4],[5,6]
-
-// [1,2],[5,6] , new_interval = [3,4]
-// [1,2],[3,4],[5,6]
-
-// o(n)
-// 
+// Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+// i 0, 1, 2, 3, 4
+// res [1,2], [3,10], [12,16]
+// startNew 4
+// endNew 8
+// mergeInterval 3, 10
