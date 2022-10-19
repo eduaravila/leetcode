@@ -1,85 +1,65 @@
-func removeTrash(s string)[]rune{
-    res := []rune{}
-    var symbol rune
-    
-    leading := false
-    noTrailing :=[]rune{}
-    for _,c := range s{
-        v := c -'0'        
-        if  (c == '+' || c== '-' ) || v >= 0 && v<=9{            
-            noTrailing = append(noTrailing, c)
-            leading = true
-        }else if c == ' ' && !leading{            
-            continue
-        }else if !leading { // if we don't have a valid char and digit to the left then that means we have an invalid input           
-            return []rune{}
-        }else{
-            break
-        }
-        
+func getMin(a,b int) int{
+    if a < b{
+        return a
     }
-    
-    for _,c := range noTrailing{
-        v := c - '0'
-        
-        if (c == '-' || c == '+') {
-            if (symbol != 0 || len(res)>0){ // already have a symbol or the symbol comes after a digit
-                break
-            } else if symbol == 0{                            
-                symbol = c
-                continue
-            }
-        }        
-        if c ==' '{
-            break
-        }
-        if v >= 0 && v <=9  {
-            res = append(res, v)
-        }else{
-            break
-        }
-    }
-    if symbol == 0{
-        symbol= '+'
-    }
-    return append([]rune{symbol},res...)
+    return b
 }
 
 func myAtoi(s string) int {
-    toRune := removeTrash(s)
-    if len(toRune) < 1{
+    
+    s = strings.TrimLeftFunc(s, func(r rune) bool {
+		return unicode.IsSpace(r)
+	})
+    if len(s) <1 {
         return 0
     }
-    var res int
-    symbol:= '+'
-    if toRune[0] == '+' || toRune[0] == '-'{
-        symbol = toRune[0]
-        toRune= toRune[1:]
+    l := strings.IndexFunc(s,func(c rune)bool{
+        return unicode.IsNumber(c)   
+    })
+    
+    
+    symbol := '+'
+    if s[0] == '-' || s[0] == '+' {
+        symbol = rune(s[0])
+        s = s[1:]            
     }
     
+    letterI := strings.IndexFunc(s, func(c rune)bool{
+        return unicode.IsLetter(c)
+    })
+    spaceI := strings.IndexFunc(s, func(c rune)bool{
+        return unicode.IsSpace(c)
+    })
+    if l == -1 || (letterI != -1 && letterI < l) || (spaceI != -1 && spaceI < l) {
+        return 0
+    }
+    end_index := len(s)
     
-    for _,c := range toRune {             
-        res = res * 10 + int(c)
-        fmt.Println(res)
-        if symbol == '+' && res > int(1<<31) -1{
-        return int(1<<31)-1
-        }else if symbol =='-' &&  ^res+1 < int(-1<< 31){
-            return int(-1<<31)
+    if letterI != -1{        
+        end_index = getMin(end_index,letterI)
+    }
+    if spaceI != -1{        
+        end_index = getMin(end_index,spaceI)
+    }
+
+
+    var res int
+    low_limit,high_limit := int(-1<<31), int(1<<31)-1
+    for _,c := range s[:end_index]{
+        v := int(c - '0')
+        if v < 0 || v > 9{
+            break
+        }
+        res = (res * 10) + v
+        if symbol == '-' && ^res + 1 < low_limit{
+            return low_limit
+        }else if symbol == '+' && res > high_limit{
+            return high_limit
         }
     }
-
-    if symbol == '+' && res < 0{
-        res = ^res 
-    }else if symbol == '-' && res >0 {
-        res = ^res+1
-    }
     
-
-    if res > int(1<<31) -1{
-        return int(1<<31)-1
-    }else if res < int(-1<< 31){
-        return int(-1<<31)
+    if symbol == '-'{
+        res = ^res +1
     }
-    
-    return res
+    return res   
 }
