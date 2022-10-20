@@ -1,38 +1,20 @@
-func getMax(a,b int) int{
-    if a > b{
-        return a
-    }
-    return b
-}
-func uniquePaths(m int, n int) int {
-    matrix := [][]int{}
-    for i := 0 ; i < m ;i++{
-        matrix = append(matrix, make([]int,n))
-    }
-    
-    return solution(matrix,0,0,make(map[string]int))
-    
+func swap(a,b *[]int){
+    temp := *a    
+    *a = *b
+    *b = temp
 }
 
-func solution(matrix [][]int, x,y int,memo map[string]int) int{
-    key := fmt.Sprintf("%d-%d",x,y)
-    if val,e := memo[key];e{
-        return val
+func uniquePaths(m int, n int) int {
+    col,row := []int{},[]int{}
+    for i := 0; i < n; i++{
+        col = append(col,1)
+        row = append(row,1)
     }
-    if x > len(matrix)-1 || y > len(matrix[0])-1  {        
-        return 0
+    for r:= 1 ; r < m ;r++ {
+        for c := 1 ; c < n ; c++ {
+            col[c] = row[c] + col[c-1]
+        }
+        swap(&col,&row)
     }
-    
-    if  x == len(matrix)-1 && y == len(matrix[0])-1 {
-        return 1
-        
-    }
-    
-    total := 0
-    matrix[x][y]+=1
-    total += solution(matrix,x+1,y,memo)
-    total += solution(matrix,x,y+1,memo)        
-    memo[key] = total
-    return total
-    
+    return row[n-1]
 }
