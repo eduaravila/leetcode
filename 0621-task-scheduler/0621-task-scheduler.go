@@ -45,6 +45,10 @@ func leastInterval(tasks []byte, n int) int {
 
         popped:= []int{}
         current := heap.Pop(h).(int)
+        if current == 1{
+            return res + h.Len()+1
+            break
+        }
         popped = append(popped,current)
         var i int
         for i < n && h.Len() > 0{
@@ -53,10 +57,7 @@ func leastInterval(tasks []byte, n int) int {
             popped = append(popped,current)         
         }
         
-        if h.Len() < 1 && popped[0] == 1{
-            res += len(popped)
-            break
-        }
+        
         for _,p := range popped{
             if p < 2{
                 continue
