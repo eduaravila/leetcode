@@ -62,9 +62,10 @@ func leastInterval(tasks []byte, n int) int {
             break
         }
         for _,p := range popped{
-            if p.times -1 > 0{
-                heap.Push(h,element{val:p.val,times:p.times-1})
+            if p.times < 2{
+                continue
             }
+            heap.Push(h,element{val:p.val,times:p.times-1})
         }
         res += n+1
 
