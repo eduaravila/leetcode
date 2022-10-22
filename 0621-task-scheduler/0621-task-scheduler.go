@@ -6,21 +6,17 @@ import (
 	"fmt"
 )
 
-// An IntHeap is a min-heap of ints.
-type element struct {
-    val byte
-    times int
-}
-type IntHeap []element
+
+type IntHeap []int
 
 func (h IntHeap) Len() int           { return len(h) }
-func (h IntHeap) Less(i, j int) bool { return h[i].times > h[j].times }
+func (h IntHeap) Less(i, j int) bool { return h[i] > h[j]}
 func (h IntHeap) Swap(i, j int)      { h[i], h[j] = h[j], h[i] }
 
 func (h *IntHeap) Push(x interface{}) {
 	// Push and Pop use pointer receivers because they modify the slice's length,
 	// not just its contents.
-	*h = append(*h, x.(element))
+	*h = append(*h, x.(int))
 }
 
 func (h *IntHeap) Pop() interface{} {
@@ -39,33 +35,33 @@ func leastInterval(tasks []byte, n int) int {
         times[c] +=1
     }
     
-    for val, t := range times{
-        heap.Push(h, element{val:val,times: t})
+    for _, t := range times{
+        heap.Push(h, t)
     }
     
     var res int
     for h.Len() > 0{
         
 
-        popped:= []element{}
-        current := heap.Pop(h).(element)
+        popped:= []int{}
+        current := heap.Pop(h).(int)
         popped = append(popped,current)
         var i int
         for i < n && h.Len() > 0{
             i++            
-            current = heap.Pop(h).(element)
+            current = heap.Pop(h).(int)
             popped = append(popped,current)         
         }
         
-        if h.Len() < 1 && popped[0].times == 1{
+        if h.Len() < 1 && popped[0] == 1{
             res += len(popped)
             break
         }
         for _,p := range popped{
-            if p.times < 2{
+            if p < 2{
                 continue
             }
-            heap.Push(h,element{val:p.val,times:p.times-1})
+            heap.Push(h,p-1)
         }
         res += n+1
 
