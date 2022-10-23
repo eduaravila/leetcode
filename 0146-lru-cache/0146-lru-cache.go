@@ -60,16 +60,16 @@ func (this *LRUCache) Put(key int, value int)  {
     
     if e {
         this.list.remove(n)
+    }else{
+        this.capacity--
     }
 
-    if this.capacity < 1 && !e{
+    if this.capacity < 0 && !e{
         temp := this.list.tail.prev
         this.list.remove(temp)
         delete(this.values,temp.key)
     }
-    if this.capacity > 0 && !e{         
-        this.capacity--
-    }
+    
     
     nnode := &node{val: value,key: key}    
     
