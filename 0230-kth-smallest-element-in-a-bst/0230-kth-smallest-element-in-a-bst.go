@@ -6,6 +6,12 @@
  *     Right *TreeNode
  * }
  */
+
+// tree is already ordered
+// inorder should sufice
+// remove from k -1 every time we add a value
+// when k == 0 we found the k smallest
+// no need to keep all the values
 func kthSmallest(root *TreeNode, k int) int {
     var value int    
     solution(root,&value, &k)
