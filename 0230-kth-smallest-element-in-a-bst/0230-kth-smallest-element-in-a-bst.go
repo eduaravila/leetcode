@@ -22,14 +22,15 @@ func solution(root *TreeNode, value *int, k *int){
     if *k < 1 {
         return 
     }
-    if root.Left!= nil{        
+    if root.Left!= nil {        
         solution(root.Left,value, k)    
     }
     if *k > 0 {
         *value = root.Val
-        *k-=1
-    }      
-    if root.Right != nil{        
+        
+    }
+    *k-=1
+    if root.Right != nil {        
         solution(root.Right,value,k)
     }
 }
