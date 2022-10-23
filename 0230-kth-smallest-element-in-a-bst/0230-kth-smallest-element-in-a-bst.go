@@ -7,22 +7,24 @@
  * }
  */
 func kthSmallest(root *TreeNode, k int) int {
-    values := []int{}
+    var value int
     current := k
-    solution(root,&values, &current)    
-    return values[k-1]
+    solution(root,&value, &current)
+    return value
 }
 
-func solution(root *TreeNode, values *[]int, k *int){
-    if root == nil || *k < 1{
-        return
+func solution(root *TreeNode, value *int, k *int){
+    if root == nil || *k < 1 {
+        return 
     }
-    if root.Left!= nil{        
-        solution(root.Left,values, k)    
+    if root.Left!= nil && *k>0{        
+        solution(root.Left,value, k)    
     }
-    *k-=1
-    *values = append(*values,root.Val)
-    if root.Right != nil{        
-        solution(root.Right,values,k)
+    if *k > 0 {
+        *value = root.Val
+    }
+    *k-=1    
+    if root.Right != nil && *k>0{        
+        solution(root.Right,value,k)
     }
 }
