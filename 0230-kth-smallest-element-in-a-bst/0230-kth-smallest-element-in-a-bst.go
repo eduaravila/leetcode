@@ -26,10 +26,10 @@ func solution(root *TreeNode, value *int, k *int){
         solution(root.Left,value, k)    
     }
     if *k > 0 {
-        *value = root.Val
-        
+        *value = root.Val        
+        *k-=1
     }
-    *k-=1
+    
     if root.Right != nil {        
         solution(root.Right,value,k)
     }
