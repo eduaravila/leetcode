@@ -8,19 +8,18 @@
  */
 func kthSmallest(root *TreeNode, k int) int {
     values := []int{}
-    queue := []*TreeNode{root}
-    for len(queue) > 0{
-        element := queue[0]
-        values = append(values, element.Val)
-        queue = queue[1:]
-        if element.Left != nil{
-            queue = append(queue,element.Left)
-        }
-        if element.Right!= nil{
-            queue = append(queue,element.Right)
-        }
-        
-    }
-    sort.Ints(values)
+    solution(root,&values)
     return values[k-1]
+}
+func solution(root *TreeNode, values *[]int){
+    if root == nil{
+        return
+    }
+    if root.Left!= nil{
+        solution(root.Left,values)    
+    }
+    *values = append(*values,root.Val)
+    if root.Right != nil{
+        solution(root.Right,values)
+    }
 }
