@@ -17,7 +17,8 @@ type LRUCache struct {
 }
 
 func (n *nodeList) add(nnode *node){
-    
+    nnode.prev = nil
+    nnode.next = nil
     prev,next := n.head,n.head.next
     
     nnode.prev= prev
@@ -47,11 +48,9 @@ func (this *LRUCache) Get(key int) int {
         return -1
     }
     
-    this.list.remove(n)
-    nnode := &node{val: n.val,key:n.key}
-    this.list.add(nnode)
-    this.values[key] = nnode
-    return nnode.val    
+    this.list.remove(n)    
+    this.list.add(n)    
+    return n.val    
 }
 
 
