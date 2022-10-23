@@ -9,8 +9,7 @@
 func kthSmallest(root *TreeNode, k int) int {
     values := []int{}
     current := k
-    solution(root,&values, &current)
-    fmt.Println(values)
+    solution(root,&values, &current)    
     return values[k-1]
 }
 
@@ -23,8 +22,7 @@ func solution(root *TreeNode, values *[]int, k *int){
     }
     *k-=1
     *values = append(*values,root.Val)
-    if root.Right != nil{
-        
+    if root.Right != nil{        
         solution(root.Right,values,k)
     }
 }
