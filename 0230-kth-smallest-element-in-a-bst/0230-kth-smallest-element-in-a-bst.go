@@ -27,8 +27,8 @@ func solution(root *TreeNode, value *int, k *int){
     }
     if *k > 0 {
         *value = root.Val
-    }
-    *k-=1    
+        *k-=1
+    }      
     if root.Right != nil{        
         solution(root.Right,value,k)
     }
