@@ -19,7 +19,7 @@ func kthSmallest(root *TreeNode, k int) int {
 }
 
 func solution(root *TreeNode, value *int, k *int){
-    if root == nil || *k < 1 {
+    if *k < 1 {
         return 
     }
     if root.Left!= nil{        
