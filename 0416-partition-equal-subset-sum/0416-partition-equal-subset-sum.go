@@ -8,12 +8,12 @@ func canPartition(nums []int) bool {
         return false
     }
     
-    return solution(nums,0,sum/2,make(map[int]map[int]bool))
+    return solution(nums,0,sum/2,make(map[string]bool))
 }
 
-func solution(nums []int, current,sum int, memo map[int]map[int]bool)bool{
-   
-    if val,e := memo[current][sum]; e {
+func solution(nums []int, current,sum int, memo map[string]bool)bool{
+    key := fmt.Sprintf("%d-%d", sum,current)
+    if val,e := memo[key]; e {
         return val
     }
     if sum < 0 || (sum > 0 && current > len(nums)-1){
@@ -24,17 +24,6 @@ func solution(nums []int, current,sum int, memo map[int]map[int]bool)bool{
         return true
     }
     
-    if solution(nums,current+1,sum-nums[current],memo) || solution(nums,current+1, sum,memo){
-        if _, e := memo[current];!e{
-            memo[current] = make(map[int]bool)
-        }
-        memo[current][sum] = true
-        return true
-    }
-    
-    if _, e := memo[current];!e{
-        memo[current] = make(map[int]bool)
-    }
-    memo[current][sum] = false
-    return false
+    memo[key] = solution(nums,current+1,sum-nums[current],memo) || solution(nums,current+1, sum,memo)
+    return memo[key]
 }
