@@ -1,50 +1,56 @@
-type Node map[rune]Node
+type values struct{
+    children map[rune]*values
+    word bool
+}
 
 type Trie struct {
-    root Node
+    head *values
 }
 
 
 func Constructor() Trie {
-    return Trie{root: make(map[rune]Node)}
+    return Trie{
+        head: &values{            
+                children: make(map[rune]*values),
+                    },
+    }
 }
 
 
 func (this *Trie) Insert(word string)  {
-    current := this.root
+    current := this.head
     for _, c := range word{
-        if next,e := current[c]; e{
-            current = next
-        }else{
-            current[c] = make(map[rune]Node)
-            current = current[c]
+        if _, e:= current.children[c];!e{
+            current.children[c] = &values{ children: make(map[rune]*values)}
         }
+        current = current.children[c]
     }
-    current['#'] = Node{} // finish 
     
+    current.word= true
 }
 
 
 func (this *Trie) Search(word string) bool {
-    current := this.root
+    current := this.head
     for _, c := range word{
-        if _,e := current[c]; !e{
+        next,e := current.children[c]
+        if !e{
             return false
         }
-        current = current[c]        
+        current = next
     }
-    
-    return current['#'] != nil
+    return current.word
 }
 
 
 func (this *Trie) StartsWith(prefix string) bool {
-    current := this.root
+    current := this.head
     for _, c := range prefix{
-        if _,e := current[c]; !e{
+        next,e := current.children[c]
+        if !e{
             return false
         }
-        current = current[c]        
+        current = next
     }
     return true
 }
