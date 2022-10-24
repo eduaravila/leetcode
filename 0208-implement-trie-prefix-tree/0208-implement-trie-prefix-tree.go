@@ -1,45 +1,45 @@
 
 
-type Trie []*Trie
+type Trie []Trie
 
 func Constructor() Trie {
-    return make([]*Trie, ('z'+1) - 'a'+1)
+    return make([]Trie, ('z'+1) - 'a'+1)
 }
 
 
 func (this *Trie) Insert(word string)  {
-    current := this
+    current := *this
     for _, c := range word{
         index :=   c- 'a'
-        if (*current)[index] == nil{
+        if current[index] == nil{
             children := Constructor()
-            (*current)[index] = &children
+            current[index] = children
         }
-        current = (*current)[index]
+        current = current[index]
     }
-    (*current)[('z'+1)-'a'] = &Trie{} 
+    current[('z'+1)-'a'] = Trie{} 
 }
 
 
 func (this *Trie) Search(word string) bool {
-    current := this
+    current := *this
     for _, c := range word{
         index :=   c- 'a'
-        next := (*current)[index]
+        next := current[index]
         if next ==nil {
             return false
         }
         current = next
     }
-    return (*current)[('z'+1)-'a'] != nil
+    return current[('z'+1)-'a'] != nil
 }
 
 
 func (this *Trie) StartsWith(prefix string) bool {
-    current := this
+    current := *this
     for _, c := range prefix{
         index :=   c- 'a'
-        next := (*current)[index]
+        next := current[index]
         if next == nil {
             return false
         }
