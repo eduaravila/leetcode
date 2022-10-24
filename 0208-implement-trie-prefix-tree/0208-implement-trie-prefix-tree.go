@@ -1,53 +1,46 @@
-type values struct{
-    children map[rune]*values
-    word bool
-}
 
-type Trie struct {
-    head *values
-}
 
+type Trie []*Trie
 
 func Constructor() Trie {
-    return Trie{
-        head: &values{            
-                children: make(map[rune]*values),
-                    },
-    }
+    return make([]*Trie, ('z'+1) - 'a'+1)
 }
 
 
 func (this *Trie) Insert(word string)  {
-    current := this.head
+    current := this
     for _, c := range word{
-        if _, e:= current.children[c];!e{
-            current.children[c] = &values{ children: make(map[rune]*values)}
+        index :=   c- 'a'
+        if (*current)[index] == nil{
+            children := Constructor()
+            (*current)[index] = &children
         }
-        current = current.children[c]
+        current = (*current)[index]
     }
-    
-    current.word= true
+    (*current)[('z'+1)-'a'] = &Trie{} 
 }
 
 
 func (this *Trie) Search(word string) bool {
-    current := this.head
+    current := this
     for _, c := range word{
-        next,e := current.children[c]
-        if !e{
+        index :=   c- 'a'
+        next := (*current)[index]
+        if next ==nil {
             return false
         }
         current = next
     }
-    return current.word
+    return (*current)[('z'+1)-'a'] != nil
 }
 
 
 func (this *Trie) StartsWith(prefix string) bool {
-    current := this.head
+    current := this
     for _, c := range prefix{
-        next,e := current.children[c]
-        if !e{
+        index :=   c- 'a'
+        next := (*current)[index]
+        if next == nil {
             return false
         }
         current = next
