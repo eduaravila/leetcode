@@ -10,24 +10,24 @@ func levelOrder(root *TreeNode) [][]int {
     if root == nil{
         return [][]int{}
     }
-    res := [][]int{}
+    levels := [][]int{}
     
     queue := []*TreeNode{root}
-    
+    level := []int{}
     for len(queue) > 0{
-        current := []int{}
         l := len(queue)
-        for _,element := range queue{
-            current = append(current,element.Val)
-            if element.Left != nil{
-                queue = append(queue,element.Left)
+        level = []int{}
+        for _, node := range queue{
+            level = append(level, node.Val)
+            if node.Left != nil{
+                queue =append(queue,node.Left)
             }
-            if element.Right != nil {
-                queue = append(queue,element.Right)
+            if node.Right != nil{
+                queue =append(queue,node.Right)
             }
         }
-        res = append(res,current)
+        levels =append(levels, level)
         queue = queue[l:]
     }
-    return res
+    return levels
 }
