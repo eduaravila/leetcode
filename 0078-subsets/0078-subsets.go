@@ -9,7 +9,7 @@ func solution(nums,current []int, res *[][]int){
     *res = append(*res,current)
     for i,num := range nums{
         current = append(current,num)
-        solution(append([]int{},nums[i+1:]...),current,res)
+        solution(nums[i+1:], current, res)
         current = append([]int{},current[:len(current)-1]...)
     }
 }
