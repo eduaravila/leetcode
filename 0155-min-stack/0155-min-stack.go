@@ -12,9 +12,8 @@ func getMin(a,b int)int{
     return b
 }
 
-func (this *MinStack) Push(val int)  {
-    inf := int(^uint(0)>>1)
-    cMin := inf
+func (this *MinStack) Push(val int)  {    
+    cMin := val
     if len(*this) > 0 {
         cMin = this.GetMin()
     }
