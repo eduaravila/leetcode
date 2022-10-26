@@ -1,3 +1,7 @@
+import (
+"strings"
+"sort"
+)
 func groupAnagrams(strs []string) [][]string {
     mapping := make(map[string][]string)
     
@@ -6,7 +10,9 @@ func groupAnagrams(strs []string) [][]string {
         for _,c := range str{
             counter[c-'a']++
         }
-        key := fmt.Sprintf("%v", counter)
+        as := strings.Split(str,"")
+        sort.Strings(as)
+        key := strings.Join(as,"")
         mapping[key] = append(mapping[key],str)
     }
     res := [][]string{}
