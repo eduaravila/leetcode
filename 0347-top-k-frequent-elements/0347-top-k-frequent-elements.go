@@ -11,12 +11,11 @@ func topKFrequent(nums []int, k int) []int {
     }
     res := []int{}
     i := len(nums)
-    for i >= 0 && k > 0{
-        for _,num := range buckets[i]{
-            res =append(res,num)
-            k--    
-        }
+    for i >= 0 && k > 0{        
+        res =append(res,buckets[i]...)
+        k-= len(buckets[i])
         i--
     }
+
     return res
 }
