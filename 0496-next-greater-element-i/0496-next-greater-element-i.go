@@ -7,6 +7,7 @@ func nextGreaterElement(nums1 []int, nums2 []int) []int {
     res := []int{}
     for _, num := range nums1{
         l := indexes[num]
+        great := -1
         for l < len(nums2){
             if nums2[l] > num{
                 break
@@ -14,10 +15,9 @@ func nextGreaterElement(nums1 []int, nums2 []int) []int {
             l++
         }
         if l < len(nums2){
-            res = append(res,nums2[l])    
-        }else{
-            res = append(res,-1)
+            great = nums2[l]   
         }
+        res = append(res,great)    
     }
     return res
 }
