@@ -4,11 +4,11 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
         
         return n-1 < 1
     }
-    if len(flowerbed) > 1 && flowerbed[0] == 0 && flowerbed[1] == 0{
+    if flowerbed[0] == 0 && flowerbed[1] == 0{
         n--
         flowerbed[0]=1
     }
-    if len(flowerbed) > 1 && flowerbed[len(flowerbed)-1] == 0 && flowerbed[len(flowerbed)-2] == 0{
+    if flowerbed[len(flowerbed)-1] == 0 && flowerbed[len(flowerbed)-2] == 0{
         n--
         flowerbed[len(flowerbed)-1]=1
     }
