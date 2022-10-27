@@ -12,17 +12,14 @@ func getLocalName(email string)string{
     return strings.Join(res,"")
 }
 
-func getDomainName(email string)string{
-    inx := 0
-    for i,c := range email{
-        inx = i
+func getDomainName(email string)string{    
+    for i,c := range email{        
         if c == '@'{
-            break
-        }
-        
+            return strings.Join(strings.Split(email,"")[i:],"")
+        }     
     }
     
-    return strings.Join(strings.Split(email,"")[inx:],"")
+    return ""
 }
 
 func numUniqueEmails(emails []string) int {
@@ -30,6 +27,6 @@ func numUniqueEmails(emails []string) int {
     for _, email := range emails{
         key := fmt.Sprintf("%s%s",getLocalName(email),getDomainName(email))
         mapping[key] =true
-    }    
+    }
     return len(mapping)
 }
