@@ -1,9 +1,14 @@
 func majorityElement(nums []int) int {
-    avg := len(nums) / 2
-    count := make(map[int]int)
+    sort.Ints(nums)
+    var current, count int
+    avg := len(nums)/ 2
     for _, num := range nums{
-        count[num]++
-        if count[num] > avg{
+        if current != num {
+            current = num
+            count=0
+        }
+        count++
+        if count > avg{
             return num
         }
     }
