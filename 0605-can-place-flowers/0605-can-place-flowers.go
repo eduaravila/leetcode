@@ -1,7 +1,6 @@
 func canPlaceFlowers(flowerbed []int, n int) bool {
     
     if len(flowerbed) < 2 && flowerbed[0] == 0{
-        
         return n-1 < 1
     }
     if flowerbed[0] == 0 && flowerbed[1] == 0{
