@@ -11,7 +11,6 @@ func productExceptSelf(nums []int) []int {
         right = append(right, right[(len(nums)-1)-i] * nums[i])
         i--
     }
-    fmt.Println(left,right)
     res := []int{}
     for i := range left{
         res = append(res , left[i]* right[(len(right)-1)-i])
