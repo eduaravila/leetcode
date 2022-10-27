@@ -30,7 +30,6 @@ func numUniqueEmails(emails []string) int {
     for _, email := range emails{
         key := fmt.Sprintf("%s%s",getLocalName(email),getDomainName(email))
         mapping[key] =true
-    }
-    fmt.Println(mapping)
+    }    
     return len(mapping)
 }
