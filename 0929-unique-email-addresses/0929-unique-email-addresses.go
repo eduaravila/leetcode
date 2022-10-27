@@ -1,5 +1,5 @@
 func getLocalName(email string)string{    
-    res := []string{}
+    res := []rune{}
     for _,c := range email{
         if c == '.'{
             continue
@@ -7,15 +7,15 @@ func getLocalName(email string)string{
         if c == '+' || c== '@' {
             break
         }
-        res = append(res,string(c))
+        res = append(res,c)
     }
-    return strings.Join(res,"")
+    return string(res)
 }
 
 func getDomainName(email string)string{    
     for i,c := range email{        
         if c == '@'{
-            return strings.Join(strings.Split(email,"")[i:],"")
+            return email[i:]
         }     
     }
     
