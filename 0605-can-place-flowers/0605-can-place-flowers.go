@@ -21,7 +21,6 @@ func canPlaceFlowers(flowerbed []int, n int) bool {
         i++
     }
     
-    
     return n < 1
 }
 
