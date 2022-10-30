@@ -24,7 +24,7 @@ func leastBricks(wall [][]int) int {
     for _,edges := range edges_per_row{
         max = getMax(max,edges)
     }
-    fmt.Println(edges_per_row,total_rows,max)
+    
     if max < 1{
         return len(wall)
     }
