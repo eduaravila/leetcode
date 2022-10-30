@@ -14,18 +14,14 @@ func leastBricks(wall [][]int) int {
     }
     for _, row := range wall{
         var edge int
-        for _, col := range row{                        
-            edge += col                                    
+        for i := 0 ; i < len(row)-1; i++{                        
+            edge += row[i]                                    
             edges_per_row[edge]++
         }
     }
     var max int
     
-    
-    for edge,edges := range edges_per_row{
-        if edge == total_rows{
-            continue
-        }
+    for _,edges := range edges_per_row{        
         max = getMax(max,edges)
     }
     
