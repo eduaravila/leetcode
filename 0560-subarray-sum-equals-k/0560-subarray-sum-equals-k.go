@@ -15,3 +15,19 @@ func subarraySum(nums []int, k int) int {
     }
     return res
 }
+
+
+func solution(nums []int, k,current int, res *int){
+    
+    if len(nums) < 1{
+        return
+    }
+    
+    solution(append([]int{},nums[1:]...),k,current+nums[0],res)
+    if current == k{
+        *res++
+    }
+    
+    solution(append([]int{},nums[1:]...),k,nums[0],res)
+
+}
