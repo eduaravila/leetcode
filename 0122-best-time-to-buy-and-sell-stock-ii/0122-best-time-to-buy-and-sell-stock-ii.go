@@ -1,18 +1,20 @@
 func maxProfit(prices []int) int {
-    profits := make([]int,len(prices))
+    profits := []int{}
    
-    var l,r int
+    var l,r,current int
     
     for r <len(prices) {
-        if prices[r] - prices[l] >= profits[l] {
-            profits[l] =prices[r] - prices[l]
+        if prices[r] - prices[l] >= current {
+            current = prices[r] - prices[l]
         }else{
+            profits = append(profits,current)
+            current = 0
             l = r
-         
         }
         r++
     }
     var res int
+    profits = append(profits,current)
     for _,profit := range profits{
         res+=profit
     }
