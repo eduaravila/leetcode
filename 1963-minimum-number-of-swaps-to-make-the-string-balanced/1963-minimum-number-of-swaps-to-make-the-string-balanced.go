@@ -1,24 +1,24 @@
 func minSwaps(s string) int {
-    op,cl := []int{},[]int{}
-    var i,res int
+    cl := []int{}
+    var i,res,op int
     
     r := len(s)-1
     for i < len(s) {
         
-        if len(cl) > len(op) {
+        if len(cl) > op {
             for s[r] == '[' {
                 r--
             }            
             res++
             cl = cl[:len(cl)-1]
-            op = append(op,i)
+            op++
             r--
         }
         if s[i] == ']'{
             cl = append(cl,i)
         }
         if s[i] == '['{
-            op = append(op,i)
+            op++
         }
         i++
     }
