@@ -23,6 +23,12 @@ func (this *RandomizedSet) Insert(val int) bool {
 }
 
 
+// use a helper slice
+// remove by moving in place slice[i],slice[len(sluce)-1]
+// and pop the last element
+// make sure to update the new index in the hashtable
+// DO THIS BEFORE REMOVING THE VALEU FROM THE HASHTABLE - **IT COULD BE THE SAME VALUE AND WE DONT WANT TO RE-ADDIT**
+
 func (this *RandomizedSet) Remove(val int) bool {
     if _,e := this.set[val];!e{
         return false
