@@ -33,11 +33,12 @@ func (this *RandomizedSet) Remove(val int) bool {
     if _,e := this.set[val];!e{
         return false
     }
-    n := this.set[val]    
-    temp := this.values[len(this.values)-1]
+    n := this.set[val]
+    this.set[this.values[len(this.values)-1]] = n
+    
     this.values[n], this.values[len(this.values)-1] = this.values[len(this.values)-1], this.values[n]    
-    this.values = this.values[:len(this.values)-1]    
-    this.set[temp] = n
+    this.values = this.values[:len(this.values)-1]        
+    
     delete(this.set,val)    
     return true
 }
