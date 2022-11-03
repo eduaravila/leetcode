@@ -1,35 +1,44 @@
-type RandomizedSet map[int]bool
+type RandomizedSet struct{
+    set map[int]int
+    values []int
+}
 
 
 func Constructor() RandomizedSet {
-    return make(map[int]bool)
+    return RandomizedSet{
+        set: make(map[int]int),
+        values: []int{},
+    }
 }
 
 
 func (this *RandomizedSet) Insert(val int) bool {
-    if _,e := (*this)[val];e{
+    if _,e := this.set[val];e{
         return false
     }
-    (*this)[val]= true
+    n := len(this.values)
+    this.set[val]= n
+    this.values = append(this.values,val)
     return true
 }
 
 
 func (this *RandomizedSet) Remove(val int) bool {
-    if _,e := (*this)[val];!e{
+    if _,e := this.set[val];!e{
         return false
     }
-    delete(*this,val)
+    n := this.set[val]    
+    temp := this.values[len(this.values)-1]
+    this.values[n], this.values[len(this.values)-1] = this.values[len(this.values)-1], this.values[n]    
+    this.values = this.values[:len(this.values)-1]    
+    this.set[temp] = n
+    delete(this.set,val)    
     return true
 }
 
 
-func (this *RandomizedSet) GetRandom() int {
-    values := []int{}
-    for val:= range *this{
-        values = append(values,val)
-    }
-    return values[rand.Intn(len(values))]
+func (this *RandomizedSet) GetRandom() int {        
+    return this.values[rand.Intn(len(this.values))]
 }
 
 
