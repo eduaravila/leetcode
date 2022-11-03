@@ -1,9 +1,11 @@
 func findRepeatedDnaSequences(s string) []string {    
-    sequence := []rune{}
-    sequences := make(map[string]int)
     if len(s) < 10{
         return []string{}
     }
+    
+    sequence := []rune{}
+    sequences := make(map[string]int)
+    
     for i := 0; i < 10 ; i++{
         sequence = append(sequence,rune(s[i]))
     }
