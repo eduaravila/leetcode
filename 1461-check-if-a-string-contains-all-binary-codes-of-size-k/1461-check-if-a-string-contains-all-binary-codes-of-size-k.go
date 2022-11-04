@@ -1,19 +1,14 @@
-func hasAllCodes(s string, k int) bool {   
-    keys := make(map[int]bool)
-    for i := 0 ; i < (1 << k) ; i++{
-        keys[i] = true
-    }
+func hasAllCodes(s string, k int) bool {       
+    seen  := make(map[string]bool)
     l,r := 0,k
     for r <= len(s){
-        key,_ := strconv.ParseInt(s[l:r],2,64)
-        if _,e := keys[int(key)];e{
-            delete(keys,int(key))
-        }
+        
+        seen[s[l:r]] = true
         l++
         r++        
     }    
 
-    return len(keys) < 1
+    return len(seen) >= (1 << k)
 }
 
 // generate binary codes 
