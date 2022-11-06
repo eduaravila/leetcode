@@ -1,17 +1,15 @@
 func moveZeroes(nums []int)  {
-    l,r := 0,1
+    var zero int
     
-    for l < len(nums) && r < len(nums){
-        for l < len(nums) && nums[l] != 0 {
-            l++   
-        }
-        r = l+1
-        for r < len(nums) && nums[r] == 0 {
-            r++
-        }
-        if l < len(nums) && r < len(nums){
-            nums[l],nums[r] = nums[r],nums[l]
-        }
-        
+    for _, num := range nums {
+        if num != 0{
+          nums[zero] = num
+          zero++
+        } 
+    }
+    
+    for zero < len(nums){
+        nums[zero] = 0
+        zero++
     }
 }
