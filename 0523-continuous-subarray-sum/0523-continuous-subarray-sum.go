@@ -4,12 +4,10 @@ func checkSubarraySum(nums []int, k int) bool {
     var sum int
     for i,num := range nums{        
         sum+=num        
-        if val,e := pref[sum%k];e{
-            if val < i{
-                return true
-            }
-        }else{
-            pref[sum%k] = i+1
+        if _,e := pref[sum%k];!e{
+            pref[sum%k] = i+1            
+        }else if pref[sum%k] < i{
+            return true
         }
     }
     return false
