@@ -1,22 +1,16 @@
-func checkSubarraySum(nums []int, k int) bool {    
-    presums :=  make(map[int]int)
-    presums[0] = 0
-    var sum, i int    
-    for i < len(nums){                             
-        sum += nums[i]  
-        remaining := sum % k 
-        
-        if _,e := presums[remaining]; !e {            
-            presums[remaining] = i + 1                 
-        }else if presums[remaining] < i{
-            return true
+func checkSubarraySum(nums []int, k int) bool {
+    pref := make(map[int]int)
+    pref[0] = 0
+    var sum int
+    for i,num := range nums{        
+        sum+=num        
+        if val,e := pref[sum%k];e{
+            if val < i{
+                return true
+            }
+        }else{
+            pref[sum%k] = i+1
         }
-        i++
     }
-    
     return false
-    
 }
-
-// [23,2,4,6,7]
-// [5:1,1:2, ]
