@@ -2,13 +2,12 @@ func removeDuplicates(nums []int) int {
     var current,k int
     
     for current < len(nums){
-        num := nums[current]
-        nums[k] = num
-        for current < len(nums) && nums[current] == num{
+        
+        nums[k] = nums[current]
+        for current < len(nums) && nums[current] == nums[k]{
             current++
         }
-        k++
-        
+        k++        
     }
     return k
 }
