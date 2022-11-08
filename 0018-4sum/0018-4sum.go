@@ -27,7 +27,7 @@ func solution(nums,current []int,res *[][]int, index, target, k int){
         return 
     }
     
-    for i:= index ; i < len(nums) - k + 1; i++{        
+    for i:= index ; i < len(nums); i++{        
         if i > index && nums[i] == nums[i-1]{ // omit duplicated starts            
             continue
         }
