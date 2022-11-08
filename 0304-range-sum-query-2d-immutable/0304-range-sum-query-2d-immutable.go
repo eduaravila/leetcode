@@ -1,6 +1,4 @@
-type NumMatrix struct {
-    pref [][]int
-}
+type NumMatrix [][]int
 
 
 func Constructor(matrix [][]int) NumMatrix {
@@ -16,20 +14,20 @@ func Constructor(matrix [][]int) NumMatrix {
             pref[x] = append(pref[x],sum+top)
         }
     }
-    return NumMatrix{pref}
+    return pref
 }
 
 
-func (this *NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
-    total := this.pref[row2][col2]
+func (this NumMatrix) SumRegion(row1 int, col1 int, row2 int, col2 int) int {
+    total := this[row2][col2]
     if col1 > 0 {
-        total -= this.pref[row2][col1-1]
+        total -= this[row2][col1-1]
     }
     if row1 > 0 {
-        total -= this.pref[row1-1][col2]
+        total -= this[row1-1][col2]
     }
     if row1 > 0 && col1 > 0{
-        total += this.pref[row1-1][col1-1]
+        total += this[row1-1][col1-1]
     }
     return total
 }
