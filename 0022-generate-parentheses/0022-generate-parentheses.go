@@ -1,20 +1,19 @@
 func generateParenthesis(n int) []string {
     res := []string{}
-    solution(n,n,[]string{},&res)
+    solution(n,n,[]rune{},&res)
     return res
 }
 
-func solution(n int,s int, current []string,res *[]string){
-
-    if n < s || n < 0 || s <0{
+func solution(o,c int, current []rune, res *[]string){
+    if c < o || o < 0{
         return 
     }
-    if n == 0 && s == 0{
-        *res = append(*res,strings.Join(current,""))
-        return 
-    }        
+    if  o < 1 && c == o{
+        *res = append(*res,string(current))
+        return
+    }
     
-    solution(n-1,s,append(current,")"),res)
-    solution(n,s-1,append(current,"("),res)
     
+    solution(o-1,c, append(current,'('),res)    
+    solution(o,c-1, append(current,')'),res)
 }
