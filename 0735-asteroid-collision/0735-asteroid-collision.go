@@ -1,18 +1,17 @@
 func asteroidCollision(asteroids []int) []int {
-    res := []int{}
-    positives :=[]int{}
+    res := []int{}    
     
     for _,asteroid := range asteroids{
         if asteroid > 0{
-            positives = append(positives, asteroid )
+            res = append(res, asteroid)
             continue   
         }
         
         ok := true
-        for len(positives) > 0 {            
-            pos :=  positives[len(positives)-1]
+        for len(res) > 0  && res[len(res)-1] > 0{
+            pos :=  res[len(res)-1]
             if int(math.Abs(float64(asteroid))) >= pos{
-                positives = positives[:len(positives)-1]                
+                res = res[:len(res)-1]                
             }
             
             if int(math.Abs(float64(asteroid))) <= pos{                
@@ -25,7 +24,7 @@ func asteroidCollision(asteroids []int) []int {
         }
     }
     
-    return append(res, positives...)
+    return res
     
 }
 
