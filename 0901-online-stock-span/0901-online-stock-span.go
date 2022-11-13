@@ -1,24 +1,27 @@
 type StockSpanner struct {
-    prices []int    
+    prices [][]int
 }
 
 
 func Constructor() StockSpanner {
     return StockSpanner{
-        prices:[]int{},
+        prices:[][]int{},
     }
 }
 
 
-func (this *StockSpanner) Next(price int) int {
+func (this *StockSpanner) Next(price int) int {        
     res := 1
-    for i:= len(this.prices)-1 ; i >= 0; i--{
-        if this.prices[i] > price{
+    i := len(this.prices)-1
+    for i >= 0 {        
+        if this.prices[i][0] > price{
             break
         }
-        res++
-    }    
-    this.prices = append(this.prices,price) 
+        res += this.prices[i][1]
+        i -= this.prices[i][1]
+    }
+
+    this.prices = append(this.prices,[]int{price,res})
     return res
 }
 
