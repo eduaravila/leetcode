@@ -7,28 +7,20 @@
  * }
  */
 
-
-
-func maxDepth(root *TreeNode) int {
-    if root == nil{
-        return 0
-    }
-    queue := []*TreeNode{root} 
-    
-    var depth int
-    for len(queue) > 0{
-        n := len(queue)
-        depth++
-        for _, element := range queue{
-            if element.Left != nil{
-                queue = append(queue,element.Left)
-            }
-            if element.Right != nil{
-                queue = append(queue,element.Right)
-            }
-        }
-        queue = queue[n:]
-    }
-    return depth
+func getMax(a,b int)int{
+    if a > b{
+        return a
+    }    
+    return b
 }
 
+func maxDepth(root *TreeNode) int {
+    return solution(root,0)
+}
+func solution(root *TreeNode, level int)int{
+    if root == nil{
+        return level
+    }
+    
+    return getMax(solution(root.Left,level+1),solution(root.Right,level+1))
+}
