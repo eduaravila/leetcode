@@ -18,7 +18,7 @@ func isSameTree(p *TreeNode, q *TreeNode) bool {
         if element1 == nil && element2 == nil{
             continue
         }
-        if element1 != nil && element2 == nil ||  element1 == nil && element2 != nil || element1.Val != element2.Val {
+        if element2 == nil ||  element1 == nil || element1.Val != element2.Val {
             return false
         }        
         q1 = append(q1,element1.Right,element1.Left)
