@@ -1,5 +1,5 @@
 func getMax(a,b int)int{
-    if a > b{
+    if a > b {
         return a
     }
     return b
@@ -7,25 +7,17 @@ func getMax(a,b int)int{
 
 func maxFrequency(nums []int, k int) int {
     sort.Ints(nums)
-    n:= len(nums)-1
-    l,r := n,n
-    var max int
-    for l >=0 {               
-        k -= nums[r] - nums[l]        
-        if k < 0{
-            k += (nums[r] - nums[r-1]) * (r-l)
-            r--
+    var res,sum,l,r int
+    
+    for r < len(nums){        
+        sum += nums[r]        
+        window := (r-l+1) * nums[r]        
+        if window > (sum + k){            
+            sum -= nums[l]
+            l++
         }
-        max = getMax(max,(r-l)+1)
-        l-- 
+        res = getMax(res,r-l+1)
+        r++
     }
-    return max
+    return res
 }
-
-// [[3,6,9]] k=2
-
-// output = 3
-
-//l=4
-//r=4
-//
