@@ -25,7 +25,7 @@ func simplifyPath(_path string) string {
             continue
         }
         
-        if dir == ".." && len(stack) <= 1 {
+        if dir == ".." && len(stack) < 1 {
             i++
             continue
         }
