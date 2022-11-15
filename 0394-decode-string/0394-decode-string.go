@@ -39,9 +39,3 @@ func solution(s string) string{
     }
     return patterns[0].String()
 }
-
-
-
-// times 3 2 
-// patters a c
-// res 
