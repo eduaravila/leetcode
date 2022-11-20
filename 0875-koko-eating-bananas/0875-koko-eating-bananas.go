@@ -40,12 +40,17 @@ func minEatingSpeed(piles []int, h int) int {
     return res
 }
 
+// 1 min
+// get the largest value in the array
 
-//30,11,23,4,20
+// from 1 to max
+// divide arr[current] / bananas, this is the amount of time it will take to each this stack of bananas if you can only eat k bananas
+// remember to ceil the result, even is takes you 10 min extra it rounds to the complete hour
+// do this with all the elements compare the total with h
+// if the total < h, search in the left side to get a smaller amount 
+/// else try to pick a bigger value
 
-// 4,11,20,23,30
+// observation
+// if h == len(arr), pick the biggest value as a result
 
 
-// Input: piles = [3,6,7,11], h = 8
-
-// 27 
