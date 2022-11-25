@@ -1,47 +1,46 @@
-func getMax(vals ...int)int{
-    var res int
-    for _,val := range vals{
-        if val > res{
-            res = val
-        }
-    }
-    return res
-}
-
 func splitArray(nums []int, k int) int {
-    
-    var sum,res int
-    
-    for _, num := range nums{
-        sum+=num
-    }
-    
-    l,r := getMax(nums...),sum
-    
-    for l <= r {
-        m := l + ((r-l) /2)
-        
-        if canSplit(nums, m, k){
-            res = m
-            r = m-1
-        }else{
-            l = m+1
-        }
-    }
-    
-    return res
+    return solution(nums,0,k,make(map[string]int))  
 }
 
-func canSplit(nums []int, sum, k int)bool{
-    groups := []int{}
-    
-    for _,num := range nums{
-        if len(groups)<1 || (groups[len(groups)-1] +num) > sum {
-            groups = append(groups,0)
-        }
-        groups[len(groups)-1]+=num
-        
+func getMin(a, b int)int{
+    if a < b{
+        return a
+    }
+    return b
+}
+
+func getMax(a, b int)int{
+    if a > b{
+        return a
+    }
+    return b
+}
+
+func solution(nums []int , i,k int, memo map[string]int) int{
+    key := fmt.Sprintf("%d-%d",i,k)
+    if val,e:= memo[key];e{
+        return val
     }
     
-    return len(groups) <=k
+    if k == 1{
+        var sum int
+        for i < len(nums){
+            sum += nums[i]
+            i++
+        }
+        return sum
+    }
+    var max, sum int
+    res := int(^uint(0)>>1)
+    for i <= len(nums)-k{ // we substract k to give other subarrays at least have 1 element
+        sum += nums[i]
+        max = getMax(sum,solution(nums,i+1,k-1,memo))
+        res = getMin(max,res)
+        if sum > res {
+            break
+        }
+        i++
+    }
+    memo[key] = res
+    return res
 }
