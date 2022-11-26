@@ -25,7 +25,7 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
     
     for {
         sa := int((l+r)>>1)
-        sb := getMax(half - sa - 2,-1)
+        sb := half - sa - 2
         
         if sa >= 0 {
             aright = nums1[sa]
