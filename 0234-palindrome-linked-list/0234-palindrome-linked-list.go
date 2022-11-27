@@ -5,24 +5,40 @@
  *     Next *ListNode
  * }
  */
+
+type Result struct{
+    Node *ListNode
+    Valid bool
+}
+
+func getSize(head *ListNode)int{
+    var res int
+    for head !=nil{
+        res++
+        head =head.Next
+    }
+    return res
+}
+
 func isPalindrome(head *ListNode) bool {
-    var reverse *ListNode
-    
-    current := head
-    
-    for current != nil{            
-        newNode := &ListNode{Val:current.Val}
-        newNode.Next = reverse
-        reverse = newNode
-        current = current.Next        
-    }
-    
-    for head != nil{
-        if head.Val != reverse.Val{
-           return false 
+    size := getSize(head)
+    return solution(head,size).Valid
+}
+
+
+func solution(head *ListNode, size int)Result{
+    if size == 0 || size == 1{
+        if size == 1 {
+            return Result{head.Next,true}
         }
-        reverse = reverse.Next
-        head = head.Next
+        return Result{head,true}
     }
-    return true
+    
+    res := solution(head.Next,size-2)
+    if res.Node.Val != head.Val{
+        return Result{res.Node.Next,false}
+    }
+    
+    return Result{res.Node.Next,res.Valid}
+    
 }
