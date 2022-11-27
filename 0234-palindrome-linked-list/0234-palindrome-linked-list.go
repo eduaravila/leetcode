@@ -34,11 +34,12 @@ func solution(head *ListNode, size int)Result{
         return Result{head,true}
     }
     
-    res := solution(head.Next,size-2)
+    res := solution(head.Next,size-2)    
     if res.Node.Val != head.Val{
-        return Result{res.Node.Next,false}
+       res.Valid = false
     }
     
-    return Result{res.Node.Next,res.Valid}
+    res.Node = res.Node.Next
+    return res
     
 }
