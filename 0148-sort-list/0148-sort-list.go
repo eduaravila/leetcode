@@ -52,8 +52,7 @@ func sortList(head *ListNode) *ListNode {
         mid.Next = nil    
     }
     l:=sortList(head)
-    r:=sortList(temp)    
-    res := merge(l,r)
-    return res
+    r:=sortList(temp)        
+    return merge(l,r)
 }
 
