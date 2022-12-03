@@ -27,7 +27,6 @@ func merge(a,b *ListNode)*ListNode{
         return a
     }
     
-    temp := &ListNode{}
     if a.Val < b.Val {
         a.Next = merge(a.Next,b)
         return a
@@ -36,7 +35,7 @@ func merge(a,b *ListNode)*ListNode{
         return b
     }
     
-    return temp
+    return nil
     
 }
 
