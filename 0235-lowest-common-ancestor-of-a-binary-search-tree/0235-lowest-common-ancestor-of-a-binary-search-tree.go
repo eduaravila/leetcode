@@ -10,20 +10,24 @@
 func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {    
     res := root
     solution(root,p,q, res)
-    
     return res
 }
 
 
-func solution(root, p, q, res *TreeNode) {
+func solution(root, p, q, res *TreeNode)bool {
     if root == nil{
-        return
+        return false
     }
+    if solution(root.Left,p,q, res) || solution(root.Right,p,q, res){
+        return true
+    }
+    
     if hasChildren(root,p) && hasChildren(root,q){
         *res = *root
+        return true
     }
-    solution(root.Left,p,q, res)
-    solution(root.Right,p,q, res)
+    return false
+    
 }
 
 func hasChildren(root, p *TreeNode)bool{
