@@ -6,26 +6,25 @@
  *     Right *TreeNode
  * }
  */
-
 func getMax(a,b int)int{
     if a > b {
         return a
-    }    
+    }
     return b
 }
 
 func rob(root *TreeNode) int {
-    res := solution(root,0,0)
-    return getMax(res[0],res[1])
+    res := solution(root)
+    return getMax(res[1],res[0])
 }
 
-func solution(root *TreeNode, sum, prev int)[]int{
+func solution(root *TreeNode)[]int{
     if root == nil{
         return []int{0,0}
     }
     
-    l := solution(root.Left, sum, root.Val+sum)
-    r := solution(root.Right, sum, root.Val+sum)
+    a := solution(root.Left)
+    b := solution(root.Right)
     
-    return []int{root.Val + l[1] + r[1], getMax(l[1],l[0]) + getMax(r[0],r[1])}
+    return []int{root.Val + b[1] + a[1], getMax(getMax(a[1]+b[0],b[1]+ a[0]),getMax(b[0]+ a[0],a[1] + b[1]) ) }
 }
