@@ -6,36 +6,31 @@
  *     Right *TreeNode
  * }
  */
-func allPossibleFBT(n int) []*TreeNode {
-    return solution(n, make(map[int][]*TreeNode))
+func allPossibleFBT(n int) []*TreeNode {    
+    return solution(n)    
 }
 
-func solution(n int, memo map[int][]*TreeNode)[]*TreeNode{
-    if val,e := memo[n]; e{
-        return val
-    }
-    if n == 0 {
-        return []*TreeNode{}
-    }   
-    
+func solution(n int) []*TreeNode{ 
     if n == 1 {
-        return []*TreeNode{
-            &TreeNode{Val:0},
-        }
-    }    
-    n--
+        return []*TreeNode{&TreeNode{
+            Val:0,
+        }}
+    }
+    
     res := []*TreeNode{}
+    n--
     for l := 1 ; l < n ; l++{
         r := n - l
-        
-        lr,rr := solution(l,memo),solution(r,memo)
-        memo[l],memo[r] = lr, rr
-        for _, noder := range rr{
-            for _, nodel := range lr{
-                root := &TreeNode{Val:0,Left:nodel,Right:noder}
+        lr,rr := solution(l),solution(r)
+        for _,nodel := range lr {            
+            for _,noder := range rr{
+                root := &TreeNode{Val:0}
+                root.Left = nodel
+                root.Right = noder
                 res = append(res,root)
             }
-        }        
+            
+        }
     }
     return res
-}
+} 
