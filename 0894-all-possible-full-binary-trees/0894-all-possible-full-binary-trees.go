@@ -23,11 +23,8 @@ func solution(n int) []*TreeNode{
         r := n - l
         lr,rr := solution(l),solution(r)
         for _,nodel := range lr {            
-            for _,noder := range rr{
-                root := &TreeNode{Val:0}
-                root.Left = nodel
-                root.Right = noder
-                res = append(res,root)
+            for _,noder := range rr{            
+                res = append(res,&TreeNode{Val:0, Left:nodel,Right:noder})
             }
             
         }
