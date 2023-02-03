@@ -6,9 +6,8 @@
  *     Right *TreeNode
  * }
  */
-type BSTIterator struct {
-    i int 
-    values []int
+type BSTIterator struct {    
+    levels []*TreeNode
 }
 
 
@@ -23,27 +22,41 @@ func getValues(root *TreeNode,values *[]int){
 }
 
 func Constructor(root *TreeNode) BSTIterator {
-    values := []int{}
-    getValues(root,&values)
+    
     return BSTIterator{
-        values: values,
-        
+        levels: []*TreeNode{root},        
     }
 }
 
 
+
 func (this *BSTIterator) Next() int {
-    res := this.values[this.i]
-    this.i++
-    return res
+    var res *TreeNode
+    for this.HasNext() && res == nil {        
+        n := len(this.levels)-1
+        node := this.levels[n]
+        if node.Left != nil{
+            this.levels = append(this.levels, node.Left)
+            node.Left = nil
+            continue
+        }
+        res = node
+        this.levels = this.levels[:n]
+
+        if node.Right != nil{
+            this.levels = append(this.levels, node.Right)
+            node.Right = nil
+            continue            
+        }
+        
+    }
+    return res.Val
+       
 }
 
 
 func (this *BSTIterator) HasNext() bool {
-    if this.i < len(this.values){
-        return true
-    }
-    return false
+    return len(this.levels) > 0
 }
 
 
