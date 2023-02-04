@@ -7,35 +7,31 @@
  * }
  */
 func allPossibleFBT(n int) []*TreeNode {
-    
-    return solution(n, make(map[int][]*TreeNode))    
+    return solution(n)
 }
 
-func solution(n int, memo map[int][]*TreeNode) []*TreeNode{ 
-    if val,e := memo[n];e{
-        return val
+func solution(n int) []*TreeNode{
+    if n == 1{
+        return []*TreeNode{
+            &TreeNode{
+                Val:0,
+            },
+        }
     }
-    
-    if n == 1 {
-        return []*TreeNode{&TreeNode{
-            Val:0,
-        }}
-    }
-    
-    res := []*TreeNode{}
+
     n--
-    for l := 1 ; l < n ; l++{
+    res := []*TreeNode{}
+    for l := 1 ; l < n ;l++{
         r := n - l
-        lr,rr := solution(l,memo),solution(r,memo)
-        memo[l] = lr
-        memo[r] = rr
-        for _,nodel := range lr {            
-            for _,noder := range rr{            
-                res = append(res,&TreeNode{Val:0, Left:nodel,Right:noder})
+        lnodes, rnodes := solution(l),solution(r)
+        
+        for _, ln := range lnodes{            
+            for _, rn := range rnodes{                        
+                res = append(res,  &TreeNode{Val:0,Left:ln, Right: rn})
             }
             
         }
     }
     
     return res
-} 
+}
