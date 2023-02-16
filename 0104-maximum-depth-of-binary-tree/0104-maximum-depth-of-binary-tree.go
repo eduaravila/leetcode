@@ -15,12 +15,17 @@ func getMax(a,b int)int{
 }
 
 func maxDepth(root *TreeNode) int {
-    return solution(root,0)
-}
-func solution(root *TreeNode, level int)int{
-    if root == nil{
-        return level
-    }
+    var max int
     
-    return getMax(solution(root.Left,level+1),solution(root.Right,level+1))
+    solution(root,1, &max)
+    return max
+}
+
+func solution(root *TreeNode,current int, max *int){
+    if root == nil{
+        return 
+    }
+    *max = getMax(current,*max)
+    solution(root.Left,current+1,max)
+    solution(root.Right,current+1,max)    
 }
