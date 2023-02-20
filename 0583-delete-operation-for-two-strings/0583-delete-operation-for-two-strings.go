@@ -6,26 +6,37 @@ func getMax(a,b int)int{
 }
 
 func minDistance(word1 string, word2 string) int {
-    l,r:=len(word1),len(word2)
-    return r + l - 2 * solution(word1 ,word2 ,l-1 ,r-1 , make(map[key]int))    
+    similar := [][]int{}
+    
+    for i:=0;i <= len(word1) ;i++{        
+        similar =append(similar, make([]int, len(word2)+1))
+    }
+    
+    
+    for l:= 1 ; l <= len(word1) ; l++{        
+        for r:= 1 ; r <= len(word2) ; r++{
+            if word1[l-1] == word2[r-1]{
+                similar[l][r] = similar[l-1][r-1] +1 
+            }else{
+                similar[l][r] = getMax(similar[l][r-1], similar[l-1][r])
+            }
+        }        
+    }
+    
+    l, r := len(word1), len(word2)
+    return l + r  - 2 * similar[l][r]
 }
 
-type key struct{
-    l,r int
-}
 
-func solution(word1,word2 string, l, r int, memo map[key]int)int{
-    k := key{l,r}
-    if val,e := memo[k];e{
-        return val
-    }
-    if l < 0 || r < 0{
-        return 0
-    }
-    if word1[l] == word2[r] {
-        memo[k] = 1+ solution(word1,word2,l-1,r-1,memo)
-        return memo[k]
-    }
-    memo[k] = getMax(solution(word1,word2, l-1,r,memo), solution(word1,word2, l,r-1,memo))
-    return memo[k]
-}
+// sea 
+// eat
+// 0
+
+// ea
+//eat
+// 1
+
+// a
+//eat
+// 1
+
