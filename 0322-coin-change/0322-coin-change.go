@@ -5,34 +5,27 @@ func getMin(a,b int)int{
     return b
 }
 
-const inf = int(^uint(0)>>1)
+
 func coinChange(coins []int, amount int) int {
     table := []int{}
     for i := 0 ; i <= amount;  i++{
-        table = append(table, inf)
+        table = append(table, amount+1)
     }
     
     table[0] = 0
     
     for _,coin := range coins {        
-        for i := 0; i < amount; i++{            
-            sum := coin + i            
-            if table[i] == inf{
+        for i := 0; i <= amount; i++{            
+            if i - coin < 0 {
                 continue
             }
-            if sum > amount {
-                break
-            }
-            
-            ncoins := table[i] + 1
-            table[sum] = getMin(table[sum], ncoins)
+            table[i] = getMin(table[i], 1+table[i-coin])
         }
     }
     
-    if table[amount] == inf{
+    if table[amount] == amount+1{
         return -1
     }
-    fmt.Println(table)
     return table[amount]
 }
 
