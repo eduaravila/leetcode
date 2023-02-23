@@ -1,20 +1,34 @@
 func climbStairs(n int) int {
-    return solution(n, make(map[int]int))
-}
-
-func solution(n int, memo map[int]int)int{
-    if val,e := memo[n];e {
-        return val
-    }
-    
-    if n < 0{
-        return 0
-    }
-    if n == 0{
+    if n == 1{
         return 1
     }
+    if n == 2{
+        return 2
+    }
     
-    memo[n-1] = solution(n-1, memo)
-    memo[n-2] = solution(n-2, memo)
-    return memo[n-1] + memo[n-2]
+    one_step, two_steps, ways := 1, 2, 0
+    
+    for i := 2 ; i < n ; i++{
+        ways = one_step + two_steps
+        one_step = two_steps
+        two_steps = ways                
+    }
+    
+    return ways
 }
+
+
+
+
+
+/*
+
+[1,2,3,5]
+
+1,1,1,1
+2,1,1,1
+1,2,1,1
+1,1,2,1
+1,1,1,2
+*/
+
