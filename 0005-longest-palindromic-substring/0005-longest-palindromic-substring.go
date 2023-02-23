@@ -1,45 +1,26 @@
-func isPalindrome(s string)bool{
-    l,r := 0,len(s)-1
-    
-    for l <= r{
-        if s[l]!=s[r]{
-            return false
-        }
-        l++
-        r--
-    }
-    return true
-}
 
-type key struct{
+type key struct {
     l,r int
 }
-
 func longestPalindrome(s string) string {
     var max string
-    solution(s,0,len(s),&max, make(map[key]bool))
+    for i := range s{
+        getPalindrome(s,i, i, &max)
+        getPalindrome(s,i,i+1, &max)
+    }
     return max
 }
 
-func solution(s string, l, r int,max *string, memo map[key]bool){    
-    _key := key{l,r}
-    if val,e := memo[_key]; e{
-        if val && r-l+1 > len(*max)  {
-            *max = s[l:r]
-        }
-        return
+
+func getPalindrome(s string, l,r int, max *string){        
+    var templ, tempr int
+    for l >= 0 && r <len(s) && s[l]==s[r] {
+        templ, tempr = l, r                                           
+        l--
+        r++
     }
     
-    if l > r {
-        return 
+    if tempr - templ +1 > len(*max){        
+        *max = s[templ:tempr+1]
     }
-    
-    if isPalindrome(s[l:r]) && r-l+1 > len(*max){
-        memo[_key] = true
-        *max = s[l:r]
-        return
-    }
-    memo[_key] = false
-    solution(s,l+1,r,max,memo)
-    solution(s,l,r-1,max,memo)
 }
