@@ -16,9 +16,7 @@ func rob(nums []int) int {
         }
         max = getMax(max,dp[i])
     }
-    
-    fmt.Println(dp)
-    
+        
     return max
 }
 
