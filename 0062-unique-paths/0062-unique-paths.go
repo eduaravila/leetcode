@@ -23,25 +23,16 @@ func uniquePaths(m int, n int) int {
         return 1
     }
     
-    res := [][]int{}
-    
-    for i:= 0; i < m; i++{
-        res = append(res, make([]int,n))
-    }
-    
-    res[0][0] = 1
-    
-    for i := 0; i < m ; i++{
-        for y := 0; y < n ; y++{
+    row,col := make([]int,m), make([]int,m)
+    row[0] = 1
+    for y := 0; y < n ; y++{
+        for i := 0; i < m ; i++{        
+            col[i] = row[i]            
             if i > 0 {
-                res[i][y] += res[i-1][y]
+                col[i] += col[i-1]
             }
-            if y > 0 {
-                res[i][y] += res[i][y-1]
-            }
-            
         }
+        row,col = col,row
     }
-    
-    return res[m-1][n-1]
+    return row[m-1]
 }
