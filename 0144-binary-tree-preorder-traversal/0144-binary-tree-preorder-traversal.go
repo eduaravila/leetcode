@@ -7,16 +7,12 @@
  * }
  */
 func preorderTraversal(root *TreeNode) []int {
-    res := []int{}
-    solution(root,&res)
-    return res
-}
-func solution(root *TreeNode, res*[]int){
     if root == nil{
-        return
+        return []int{}
     }
-    
-    *res = append(*res, root.Val)
-    solution(root.Left,res)
-    solution(root.Right,res)
+    res := []int{}
+    res = append(res, root.Val)
+    res = append(res, preorderTraversal(root.Left)...)
+    res = append(res, preorderTraversal(root.Right)...)
+    return res
 }
