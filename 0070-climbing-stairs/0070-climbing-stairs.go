@@ -1,34 +1,37 @@
 func climbStairs(n int) int {
-    if n == 1{
-        return 1
-    }
-    if n == 2{
-        return 2
+    dp := make([]int,n)
+    if n < 3{
+        return n
     }
     
-    one_step, two_steps, ways := 1, 2, 0
+    dp[0] = 1
+    dp[1] = 2
     
     for i := 2 ; i < n ; i++{
-        ways = one_step + two_steps
-        one_step = two_steps
-        two_steps = ways                
+        dp[i] = dp[i-1] + dp[i-2]
     }
-    
-    return ways
+    return dp[n-1]
 }
 
-
-
-
-
 /*
+base case: 
 
-[1,2,3,5]
 
-1,1,1,1
-2,1,1,1
-1,2,1,1
-1,1,2,1
-1,1,1,2
+[1,1,1,1]
+
+[1,2,3,5,8]
+
+n = 1 -> 1 | 1,
+
+n = 2 -> 2 | 1, 2
+
+
+n 3 -> 1,1,1 | 1,2 | 2,1
+
+invalid: 1,1,2 | 2, 2
+
+
+n = 4 -> 1,1,1,1 | 2,2 | 2,1,1 | 1,1,2 | 1,2,1 |
+
+
 */
-
