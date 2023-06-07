@@ -1,54 +1,88 @@
-func getMax(a,b int)int{
-    if a > b{
+func getMin(a,b int)int{
+    if a < b {
         return a
     }
     return b
 }
 
-func merge(intervals [][]int) [][]int {    
-    sort.Slice(intervals, func(a,b int)bool{
-        return intervals[a][0] < intervals[b][0]
-    })
+func getMax(a,b int)int{
+    if a > b {
+        return a
+    }
+    return b
+}
+
+func merge(intervals [][]int) [][]int {
+    sort.Slice(intervals, func(i, j int) bool {
+		return intervals[i][0] < intervals[j][0]
+	})
     
-    var start, end, i int
+    var i int
     res := [][]int{}
-    a,b := 0,1
-    max := intervals[0][b]
-    for end < len(intervals){
-        max = getMax(max,intervals[end][b])
-        for i < len(intervals) && intervals[start][a] <= intervals[i][a] && max >= intervals[i][a] {            
-            end = i
-            max = getMax(max,intervals[end][b])
-            i++            
+    
+    for i < len(intervals){
+        current := intervals[i]
+        i++        
+        
+        for i < len(intervals) && current[1] >= intervals[i][0] && current[0] <= intervals[i][1]{
+            current = []int{getMin(current[0], intervals[i][0]),getMax(current[1], intervals[i][1])} 
+            i++
         }
         
-        res = append(res, []int{intervals[start][a], max})
-        end++
-        start = end
+        res = append(res,current)
+
     }
-    
     return res
 }
 
 
 /*
-[[1,3],[2,6],[8,10],[15,18]]
-
-
-start int
-end int
-
-a = 0
-b = 1
-
-
-for end < len(intervals) 
-    merge more than 2 
-    if arr[start][a] <= arr[i][a] && arr[end][b] >= arr[i][a] && arr[end][b] <= arr[i][b]
-        end = i
-
-    update the intervals from start to end, end should have the largest value
+ [[1,3],[2,6],[8,10],[15,18]]
+  [1,6], [8,10],[15,18]
+  
+  
+  
+  [1,4],[4,5]
+  [1,5] ->
+   a,b
+   
+   [1,4], [1,9] -> [1,9]
+   [1,4], [2,9] -> [1,9]
+   
+   [1,1], [1,2] -> [1,2]
+   
+   [1,10],[9,10] -> [1,10]
+   
+   [1,2], [3,9] ->  X
+   
+    two intervals overlap if 
     
-    start = end
+   b1 >= a2 && a1 <= b2
+    
+    [1,4],[0,0]
+    
+    [0,0],[1,4]
+    
+
+        1,2,3,4
+      0
+    
+   
+   
+    newinterval= [getMin(a1,a2), getMax(b1,b2)]
+    current = newinterval
+    
+    
+     [[1,3],[2,6],[8,10],[15,18]]
+      
+      current = [8,10]
+      
+      result = [1,6],
+  
+  
+[[2,3],[4,5],[6,7],[8,9],[1,10]]
+
+[1,10],[2,3],[4,5],[6,7],[8,9]
+
 
 */
