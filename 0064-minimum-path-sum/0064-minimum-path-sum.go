@@ -1,36 +1,3 @@
-/*
-
-base case 
-    x and y == m, n
-
-
-to get grid[m][n] we need grid[m][n] steps
-
-
-if the is no value available to the right choose 
-
-[i,3,1]
-[i,i,0]
-
-
-[i,i,i]
-[i,i,i]
-[i,i,i]
-
-
-*/
-
-
-func getInfArrOfSize(size int)[]int{
-    inf := int(^uint(0)>>1)
-    res := make([]int,size)
-    
-    for i := range res{
-        res[i] = inf
-    }
-    return res
-}
-
 func getMin(a,b int)int{
     if a < b{
         return a
@@ -38,21 +5,35 @@ func getMin(a,b int)int{
     return b
 }
 
+const inf = int((^uint(0)) >> 1)
+
 func minPathSum(grid [][]int) int {
-    m,n := len(grid),len(grid[0])
-    res := getInfArrOfSize(n)
-    res[n-1] = 0
-    
-    for i := m-1; i > -1 ; i--{
-        dp := getInfArrOfSize(n)
-        for x := n-1; x > -1; x--{
-            if x < n-1{
-                dp[x] = getMin(dp[x+1], dp[x])
-            }
-            dp[x] = getMin(dp[x], res[x]) + grid[i][x]
-        }
-        res = dp
-    }
-    
-    return res[0]
+    return topDown(grid, len(grid)-1, len(grid[0])-1, make(map[string]int))
 }
+
+func topDown(grid[][]int, col, row int, memo map[string]int ) int{
+    key := fmt.Sprintf("%d-%d",col,row)
+    
+    if val, e := memo[key];e{
+        return val
+    }
+    if col == 0 && row == 0{
+        return grid[col][row]
+    }
+    if col < 0 || row < 0{
+        return inf
+    }   
+    
+    min := getMin(topDown(grid,col-1, row, memo), topDown(grid,col,row-1, memo))
+    memo[key] =min + grid[col][row] 
+    return memo[key]
+}
+
+/*
+    [[1]] -> 1
+    
+    
+    final point = x = len(grid) y = len(grid[0])
+    
+    memo[targetcol][targetrow] = grid[targetcol][targetrow] + min(dp(currentrow-1,currentcol),dp(currentrow, currentcol-1)) 
+*/
