@@ -26,9 +26,16 @@ func findMaxFormsDp(pairs [][]int,current, availableZ, availableO int, memo map[
 }
 
 func findMaxForm(strs []string, m int, n int) int {
+    dp := [][]int{}
     sets := [][]int{}
-   for _,str := range strs {
+        
+    for i := 0 ; i <=m ; i++{
+        dp = append(dp, make([]int,n+1))    
+    }
+    
+    for _,str := range strs {
         ones,zeros := 0,0
+        
         for _, c := range str{
             if c == '1'{
                 ones++
@@ -38,7 +45,16 @@ func findMaxForm(strs []string, m int, n int) int {
         }
         sets = append(sets, []int{zeros,ones})
     }
-    return findMaxFormsDp(sets,0,m,n, make(map[string]int))
+    
+    for _, set := range sets{
+        for i := m ; i >= set[0]; i--{
+            for x := n ; x>= set[1]; x--{
+                dp[i][x] = getMax(dp[i][x], 1+ dp[i-set[0]][x-set[1]])
+            }
+        }
+    }
+    
+    return dp[m][n]
 }
 
 /*
@@ -83,16 +99,16 @@ compare a pair with n and m until it satisfies the condition and return the inde
 dp[i][j] = max(dp[i][j],1+dp[i-currZeros][j-currOnes]);
 
 
-[0,1],[1,0],[1,1],[3,1],[2,3]
+[0,1],[1,0],[1,1],[3,1],[2,3],[0,1],[0,1],[0,2]
 
-i = 5
-x = 3,2
+i = 0
+x = 3
+res = 2
 
-[0,0,0]
-[0,0,0]
-[0,0,0]
-[0,0,0]
-[0,0,1]
+
+[0, 2, 2, 2]
+
+
 
 */
 
